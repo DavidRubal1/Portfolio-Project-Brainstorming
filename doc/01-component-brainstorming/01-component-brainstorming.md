@@ -1,12 +1,12 @@
 # Portfolio Part 1: Component Brainstorming
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) then delete this comment -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) then delete this comment -->
-- **Due Date**: <!-- TODO: fill with due date and time (e.g., 10/17 @ 3:10 PM EST) then delete this comment -->
+- **Name**: David Rubal
+- **Dot Number**: rubal.9
+- **Due Date**: 2/6/26 @ 4:10 PM EST
 
 ## Assignment Overview
 
-<!-- TODO: read the assignment overview then delete this comment -->
+
 
 The overall goal of the portfolio project is to have you design and implement
 your own OSU component. There are no limits to what you choose to design and
@@ -29,7 +29,7 @@ implement.
 
 ## Assignment Checklist
 
-<!-- TODO: browse the checklist then delete this comment -->
+
 
 To be sure you have completed everything on this assignment, we have littered
 this document with TODO comments. You can browse all of them in VSCode by
@@ -52,7 +52,6 @@ to the tree diagram (you may remove this one as well):
 
 ## Assignment Learning Objectives
 
-<!-- TODO: read the assignment learning objectives then delete this comment -->
 
 Without learning objectives, there really is no clear reason why a particular
 assessment or activity exists. Therefore, to be completely transparent, here is
@@ -67,7 +66,6 @@ project. Specifically, students should be able to:
 
 ## Assignment Rubric: 10 Points
 
-<!-- TODO: read the assignment rubric then delete this comment -->
 
 Again, to be completely transparent, most of the portfolio project, except the
 final submission, is designed as a formative assessment. Formative assessments
@@ -106,15 +104,15 @@ Below is further rationale/explanation for the rubric items above:
 > brainstorming. Plus it helps us get to know you better! Feel free to share
 > images in this section.
 
-<!-- TODO: briefly talk about your interests then delete this comment.
-Also, protip: you can preview what your response looks like by hitting
-the magnifying glass icon in the upper-right corner or pressing CTRL+K and
-then V. This kind of button combination is called a chord, for whatever
-reason -->
+A few of my personal hobbies include playing table tennis, learning piano, reading (largely fiction), running, and playing various games (roguelikes, rpgs, smash). Reading is one of those hobbies that has more recently regained my attention, especially when I am not forced to read with a deadline. Running is my main personal commitement that I picked up a few summers ago and its something that I've been able to maintain here thanks to the gyms. Table tennis is a fun one, I wouldn't say that I could play competitively but I enjoy playing with friends when I can. Piano is the hobby that I have not had the time or opportunity to practice while on campus, but I value the prospect of mastery and of understanding the meaning of the notes on a sheet. For the games that I play, I love to hate smash ultimate and I enjoy a run of Balatro or Slay the Spire whenever I can sneak it in.
+
+My career path falls broadly into the computer science field and engineering in general, since I have not had much experience or preference towards a certain specialty. I find that I like making/coding stuff, but I often realize I lack the depth of knowledge required to make super complicated things. For example, customizibility is something that I appreciate, so my limited knowledge of CSS, JavaScript, and the Tampermonkey extension allowed me to create my very own *very janky*  WIP dark mode for CarmenCanvas last semester. Additionally, for a high school math project that permitted any medium for creation, I resorted to making an HTML page out of my own curiosity and to challenge myself.
+![alt text](image-1.png)
+![alt text](image.png)
+
 
 ## Assignment
 
-<!-- TODO: read the assignment section then delete this comment -->
 
 As previously stated, you are tasked with brainstorming 3 possible components.
 To aid you in this process, we have provided [some example components][example-components]
@@ -122,7 +120,7 @@ that may help you in your brainstorming. All of these components were made at
 some point by one of your peers, so you should feel confident that you can
 accomplish any of them.
 
-<!-- TODO: browse the list of possible projects then delete this comment -->
+
 
 There is no requirement that you use any of the components listed above.
 If you want to model something else, go for it! Very common early object
@@ -143,7 +141,6 @@ about different ways you might allow a client to manipulate your component.
 
 ### Example Component
 
-<!-- TODO: review this example component then delete this comment -->
 
 To help you brainstorm a few components, we've provided an example below of a
 component you already know well: NaturalNumber. We highly recommend that you
@@ -211,68 +208,87 @@ will likely refine your design to make your implementation easier to use.
 
 > Please use this section to share your designs.
 
-- Component Design #1: <!-- TODO: give component a name then delete this comment -->
+- Component Design #1: Piano
   - **Description**:
-    - <!-- TODO: describe your component then delete this comment -->
+    - This component models the layout and functionality of a piano. The piano will be made up of keys and pedals that can be activated and deactivated by the client.
   - **Kernel Methods**:
-    - <!-- TODO: list kernel methods then delete this comment -->
+    - `void toggleState(Key k)`: alters the state (pressed, unpressed) of the given Key.
+      `void toggleState(Pedal p)`: alters the state of the given Pedal.
+      `boolean isActive(Key k)`: returns whether the given key is active.
+      `boolean isActive(Pedal k)`: returns whether the given pedal is active.
   - **Secondary Methods**:
-    - <!-- TODO: list secondary methods then delete this comment -->
+    - `void playKey(Key... k)`: activates the provided keys if they are inactive
+      `void releaseKey(Key... k)`: deactivates the provided keys if they are active
+      `Key[] getActiveKeys()`: returns an array of every active key
   - **Additional Considerations** (*note*: "I don't know" is an acceptable
     answer for each of the following questions):
     - Would this component be mutable? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes, the keys, pedals, and potentially other attributes of the piano component would be able to be updates as desired after the object is created.
     - Would this component rely on any internal classes (e.g., `Map.Pair`)?
       Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes, this component would likely rely on the internal classes of Key and Pedal to model the individual components that make up the piano. I would imagine that these components have their own attributes such as frequency/pitch to differentiate them.
     - Would this component need any enums or constants (e.g.,
       `Program.Instruction`)? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - I do not know.
     - Can you implement your secondary methods using your kernel methods?
       Answer, explain, and give at least one example:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes, playKey and releaseKey can be implemented by using isActive to determine the state of each key, followed by toggleState to change the state accordingly.
 
-- Component Design #2: <!-- TODO: give component a name then delete this comment -->
+- Component Design #2: Treadmill
   - **Description**:
-    - <!-- TODO: describe your component then delete this comment -->
+    - This component models the functionality of a treadmill, keeping track of each statistic as the treadmill runs.
   - **Kernel Methods**:
-    - <!-- TODO: list kernel methods then delete this comment -->
+    - `void setSpeed(float f)`: sets the speed of the treadmill's tread to the given speed
+    `void setIncline(float f)`: sets the magnitude of the treadmill's incline to the given value
+    `void setTime(int i)`: sets the current time spent on the treadmill to the given value
   - **Secondary Methods**:
-    - <!-- TODO: list secondary methods then delete this comment -->
+    - `void reset()`: sets every statistic back to its default value. Sets all numbers to 0.
+    `void incrementSpeed()`: increments the current speed by 0.1.
+    `void decrementSpeed()`: decrements the current speed by 0.1.
+    `void incrementIncline()`: increments the current incline by 0.1
+    `void decrementIncline()`: decrements the current incline by 0.1
   - **Additional Considerations** (*note*: "I don't know" is an acceptable
     answer for each of the following questions):
     - Would this component be mutable? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes, the attributes of this component such as speed, incline, time, etc. would be able to be changed.
     - Would this component rely on any internal classes (e.g., `Map.Pair`)?
       Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Maybe, the timer functionality may be offloaded to another class.
     - Would this component need any enums or constants (e.g.,
       `Program.Instruction`)? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - I do not know. It may need a constant to convert between distance units if that is a functionality to be added.
     - Can you implement your secondary methods using your kernel methods?
       Answer, explain, and give at least one example:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - yes, incrementSpeed takes the current speed and calls setSpeed with an argument of current speed + 0.1.
 
-- Component Design #3: <!-- TODO: give component a name then delete this comment -->
+- Component Design #3: Book
   - **Description**:
-    - <!-- TODO: describe your component then delete this comment -->
+    - This component models a book/literary work. Every book has a front and back cover and no pages by default. Pages may be added to the book, words may be added to these pages, and chapters may be added to divide up these words.
   - **Kernel Methods**:
-    - <!-- TODO: list kernel methods then delete this comment -->
+    - `void addPage(int i)`: Inserts a page at the page index i of the book.
+      `void removePage(int i)`: Removes a page at the page index i of the book.
+      `void chapter(int i)`: Begins a new chapter at the start of the given page i if there is no existing chapter on that page. If there is an exisiting chapter on that page, then remove that chapter.
+      `void addWord(int i, int pos)`: Adds a word at the given word index pos on the given page i.
+      `String removeWord(int i, int pos)`: Removes and returns the word on page i at word index pos.
+      `int pageLength(int i)`: reports the number of words on page i.
   - **Secondary Methods**:
-    - <!-- TODO: list secondary methods then delete this comment -->
+    - `void addLine(int i, int pos, String s)`: Adds a line of words s to the given page i at word index pos.
+      `String removeLine(int i, int posStart, int posEnd)`: Removes and returns the line of words on page i from word index posStart to word index posEnd.
+      `int wordCount()`: reports the number of words within the whole Book.
+
   - **Additional Considerations** (*note*: "I don't know" is an acceptable
     answer for each of the following questions):
     - Would this component be mutable? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes. Pages, chapters, and words can be added and removed from the Book as the client pleases.
     - Would this component rely on any internal classes (e.g., `Map.Pair`)?
       Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - It is unlikely, unless the pages are to be represented as files or some other object.
     - Would this component need any enums or constants (e.g.,
       `Program.Instruction`)? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - I do not know.
     - Can you implement your secondary methods using your kernel methods?
       Answer, explain, and give at least one example:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes, addLine calls addWord for every word in the given String s, and likely also calls page length to know where to place each word.
 
 ## Post-Assignment
 
@@ -281,7 +297,6 @@ completed the assignment.
 
 ### Changelog
 
-<!-- TODO: create CHANGELOG then delete this comment -->
 
 At the end of every assignment, you should update the
 [CHANGELOG.md](../../CHANGELOG.md) file found in the root of the project folder.
@@ -299,13 +314,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Calendar Versioning](https://calver.org/) of
 the following form: YYYY.0M.0D.
 
-## YYYY.MM.DD
+## 2026.02.05
 
 ### Added
 
-- Designed a <!-- insert name of component 1 here --> component
-- Designed a <!-- insert name of component 2 here --> component
-- Designed a <!-- insert name of component 3 here --> component
+- Designed a Piano component
+- Designed a Treadmill component
+- Designed a Book component
 ```
 
 Here `YYYY.MM.DD` would be the date of your submission, such as 2024.04.21.
@@ -320,7 +335,6 @@ of development.
 
 ### Submission
 
-<!-- TODO: read the submission instructions then delete this comment -->
 
 If you have completed the assignment using this template, we recommend that
 you convert it to a PDF before submission. If you're not sure how, check out
@@ -330,7 +344,7 @@ all your work is there before submitting. For future assignments, you will
 just be submitting a link to a pull request. This will be the only time
 you have to submit any PDFs.
 
-<!-- TODO: upload a PDF of this document and the CHANGELOG to Carmen then delete this comment -->
+
 
 ### Peer Review
 
