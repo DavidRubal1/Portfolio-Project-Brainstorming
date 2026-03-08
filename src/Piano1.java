@@ -61,10 +61,6 @@ public class Piano1 {
     // private static final double SOFT_DAMPENING_FACTOR = 0.5;
 
     /**
-     * Time interval that the piano object runs at.
-     */
-    private static final int millisecondFrameDelay = 16;
-    /**
      * Total time acculmulated by the piano.
      */
     private double time;
@@ -203,8 +199,8 @@ public class Piano1 {
         return activeKeys;
     }
 
-    // increments the time of the piano
-    public void passTime() {
+    // increments the time of the piano by an amount in milliseconds
+    public void passTime(int milliseconds) {
 
         for (int i = 0; i < this.pianoKeyboard.length(); i++) {
             Sequence<Double> key = this.pianoKeyboard.entry(i);
@@ -212,17 +208,11 @@ public class Piano1 {
                 key.replaceEntry(TIME_INDEX, 0.0);
             } else {
                 key.replaceEntry(TIME_INDEX,
-                        key.entry(TIME_INDEX) - millisecondFrameDelay / 1000.0);
+                        key.entry(TIME_INDEX) - milliseconds / 1000.0);
             }
         }
-        // time delay code sourced from
-        // Anju Aravind on https://stackoverflow.com/questions/24104313/how-do-i-make-a-delay-in-java
-        try {
-            Thread.sleep(millisecondFrameDelay);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        this.time += millisecondFrameDelay / 1000.0;
+
+        this.time += milliseconds / 1000.0;
 
     }
 
@@ -251,7 +241,15 @@ public class Piano1 {
             }
             out.println(
                     "        ||   Seconds Passed: " + currentTime + "    ||");
-            myPiano.passTime();
+            myPiano.passTime(16);
+            // Probably just keep the Thread management stuff out of the methods
+            // time delay code sourced from
+            // Anju Aravind on https://stackoverflow.com/questions/24104313/how-do-i-make-a-delay-in-java
+            try {
+                Thread.sleep(16);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         int pianoSize = 13, startingKey = 28;
@@ -281,7 +279,15 @@ public class Piano1 {
 
             out.println(
                     "        ||   Seconds Passed: " + currentTime + "    ||");
-            mySmallPiano.passTime();
+            mySmallPiano.passTime(16);
+            // Probably just keep the Thread management stuff out of the methods
+            // time delay code sourced from
+            // Anju Aravind on https://stackoverflow.com/questions/24104313/how-do-i-make-a-delay-in-java
+            try {
+                Thread.sleep(16);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         out.close();
