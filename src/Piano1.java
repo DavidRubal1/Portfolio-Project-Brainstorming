@@ -65,33 +65,17 @@ public class Piano1 {
      */
     private double time;
 
+    /* METHODS */
+
     // note frequency formula sourced from wikipedia
     // https://en.wikipedia.org/wiki/Piano_key_frequencies
     private static double pitchFromKeyNum(int keyNum) {
         return (Math.pow(2, ((keyNum - 49) / 12.0))) * 440;
     }
 
-    /**
-     * Plays the key by setting the time property to a passed argument.
-     */
-    public void playKey(int keyNum, double pressTime) {
-        this.pianoKeyboard.entry(keyNum - this.keyIndexOffset)
-                .replaceEntry(TIME_INDEX, pressTime);
-    }
-
-    public double getPressDuration(int keyNum) {
-        return this.pianoKeyboard.entry(keyNum - this.keyIndexOffset)
-                .entry(TIME_INDEX);
-    }
-
-    public void setPitch(int keyNum, double pitch) {
-        this.pianoKeyboard.entry(keyNum - this.keyIndexOffset)
-                .replaceEntry(PITCH_INDEX, pitch);
-    }
-
-    public double getPitch(int keyNum) {
-        return this.pianoKeyboard.entry(keyNum - this.keyIndexOffset)
-                .entry(PITCH_INDEX);
+    //gets key starting at offset, not by index
+    public Sequence<Double> getKey(int keyNum) {
+        return this.pianoKeyboard.entry(keyNum - this.keyIndexOffset);
     }
 
     public double getTime() {
@@ -113,7 +97,6 @@ public class Piano1 {
         if (keyNum < this.pianoKeyboard.entry(0).entry(KEYNUM_INDEX)) {
             this.keyIndexOffset -= 1;
         }
-
     }
 
     // Removes a key from either end of the keyboard
@@ -133,12 +116,6 @@ public class Piano1 {
     //         this.pedals[pedalIndex] = 0;
     //     }
     // }
-
-    // returns whether a key is active based on whether the time property is greater than 0
-    public boolean isKeyActive(int keyNum) {
-        return this.pianoKeyboard.entry(keyNum - this.keyIndexOffset)
-                .entry(TIME_INDEX) > 0;
-    }
 
     // usused pedal code
     // public boolean isPedalActive(int pedalIndex) {
@@ -182,6 +159,30 @@ public class Piano1 {
         this.createNewRep(numKeys, startKey);
     }
 
+    /**
+     * Plays the key by setting the time property to a passed argument.
+     */
+    public void playKey(int keyNum, double pressTime) {
+        this.getKey(keyNum).replaceEntry(TIME_INDEX, pressTime);
+    }
+
+    // returns whether a key is active based on whether the time property is greater than 0
+    public boolean isKeyActive(int keyNum) {
+        return this.getKey(keyNum).entry(TIME_INDEX) > 0;
+    }
+
+    public double getPressDuration(int keyNum) {
+        return this.getKey(keyNum).entry(TIME_INDEX);
+    }
+
+    public double getPitch(int keyNum) {
+        return this.getKey(keyNum).entry(PITCH_INDEX);
+    }
+
+    public void setPitch(int keyNum, double pitch) {
+        this.getKey(keyNum).replaceEntry(PITCH_INDEX, pitch);
+    }
+
     // Returns a sequence of sequences of doubles that are references to the keys that are active
     public Sequence<Sequence<Double>> getActiveKeys() {
         Sequence<Sequence<Double>> activeKeys = this.pianoKeyboard
@@ -203,7 +204,7 @@ public class Piano1 {
     public void passTime(int milliseconds) {
 
         for (int i = 0; i < this.pianoKeyboard.length(); i++) {
-            Sequence<Double> key = this.pianoKeyboard.entry(i);
+            Sequence<Double> key = this.getKey(i + this.keyIndexOffset);
             if (key.entry(TIME_INDEX) <= 0) {
                 key.replaceEntry(TIME_INDEX, 0.0);
             } else {
@@ -213,7 +214,6 @@ public class Piano1 {
         }
 
         this.time += milliseconds / 1000.0;
-
     }
 
     // The main method.
