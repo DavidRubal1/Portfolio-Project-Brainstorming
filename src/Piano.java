@@ -1,4 +1,8 @@
-
+/**
+ * PianoKernel with secondary methods.
+ *
+ * @author David Rubal
+ */
 public interface Piano extends PianoKernel {
 
     /**
@@ -52,7 +56,7 @@ public interface Piano extends PianoKernel {
     }
 
     /**
-     * Plays the key by updating the respective Key's active time
+     * Plays the key by updating the respective Key's active time.
      *
      * @param keyNum
      *            the Key that is being pressed
@@ -64,7 +68,7 @@ public interface Piano extends PianoKernel {
     void playKey(int keyNum, double pressTime);
 
     /**
-     * Returns whether the given key is active
+     * Returns whether the given key is active.
      *
      * @param keyNum
      *            the number for the Key that is being checked for activity
@@ -108,7 +112,6 @@ public interface Piano extends PianoKernel {
      */
     void setPitch(int keyNum, double pitch);
 
-    // Returns a sequence of sequences of doubles that are references to the keys that are active
     /**
      * Returns an array of the active Keys.
      *
@@ -116,7 +119,6 @@ public interface Piano extends PianoKernel {
      */
     Piano.Key[] getActiveKeys();
 
-    // increments the time of the piano by an amount in milliseconds
     /**
      * Increments the internal timer of the clock by the given time in
      * milliseconds.

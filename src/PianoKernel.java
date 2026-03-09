@@ -1,6 +1,12 @@
 import components.standard.Standard;
 
-public interface PianoKernel extends Standard {
+/**
+ * Piano kernel component with kernel methods.
+ *
+ *
+ * @author David Rubal
+ */
+public interface PianoKernel extends Standard<Piano> {
 
     /**
      * Returns the specified Key.
