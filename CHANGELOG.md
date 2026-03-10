@@ -14,4 +14,15 @@ the following form: YYYY.0M.0D.
 - Designed a Piano component
 - Designed a Treadmill component
 - Designed a Book component
+
+## 2026.03.09
+
+### Added
+
+- Designed kernel and enhanced interfaces for Piano component
+
+### Updated
+
+- Changed design to include Key object, methods for getting and setting each field of Key, a getKey kernel method, and a length kernel method
+- Changed return type of functions that would have returned a Sequence<Double> to return a Piano.Key
 ```
