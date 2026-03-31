@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 /**
  * PianoKernel with secondary methods.
  *
@@ -113,14 +116,14 @@ public interface Piano extends PianoKernel {
     void setPitch(int keyNum, double pitch);
 
     /**
-     * Returns an array of the active Keys.
+     * Returns an ArrayList of the active Keys.
      *
-     * @return array of all active Keys in this
+     * @return ArrayList of all active Keys in this
      */
-    Piano.Key[] getActiveKeys();
+    ArrayList<Piano.Key> getActiveKeys();
 
     /**
-     * Increments the internal timer of the clock by the given time in
+     * Decrements the active time of each active key by the given time in
      * milliseconds.
      *
      * @param milliseconds
