@@ -15,6 +15,15 @@ the following form: YYYY.0M.0D.
 - Designed a Treadmill component
 - Designed a Book component
 
+## 2026.02.26
+
+### Added
+
+- Designed a proof of concept for Piano component
+
+### Updated
+
+- Changed design to include time, and the ability to add and remove keys to the keyboard.
 ## 2026.03.09
 
 ### Added
