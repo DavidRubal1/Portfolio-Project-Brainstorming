@@ -111,7 +111,7 @@ Below is further rationale/explanation for the rubric items above:
 > to create a new design. In you do end up picking one at random, you should
 > disclose that here as well.
 
-- I am choosing to work on my "Piano" design from part 1. I think that while it is the most complicated of the three I brainstormed, I will still enjoy the process of figuring out how I am going to implement it. Additionally, choosing this object means I get motivation from knowing that I can mess around with it when I finish it. I think my "Book" object is a good second choice to fall back on if this one doesn't work out due to its lower complexity. For a second fallback choice I would have to come up with something new because I cannot think of how modeling a treadmill would be useful unless I start seeing job opportunities with Peloton.
+- I am choosing to work on my "Piano" design from part 1. I think that while it is the most complicated of the three I brainstormed, I will still enjoy the process of figuring out how I am going to implement it. It works well with my interests and I think I would be good to show off to others once it is done. Additionally, choosing this object means I get motivation from knowing that I can mess around with it when I finish it. I think my "Book" object is a good second choice to fall back on if this one doesn't work out due to its lower complexity. For a second fallback choice I would have to come up with something new because I cannot think of how modeling a treadmill would be useful unless I start seeing job opportunities with Peloton.
 
 > Once you've argued your choice of design, make a branch in your new repo called
 > something like `proof-of-concept`. There are many ways to do this, but my
@@ -122,7 +122,6 @@ Below is further rationale/explanation for the rubric items above:
 > we'll want a branch that you can later make a pull request from with all
 > your changes.
 
-<!-- TODO: make a new branch from main then delete this comment -->
 
 ## Assignment Tasks
 
