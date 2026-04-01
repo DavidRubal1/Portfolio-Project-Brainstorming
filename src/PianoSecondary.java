@@ -1,18 +1,62 @@
 import java.util.ArrayList;
 
-import components.sequence.Sequence;
-
+/**
+ * Layered implementation for secondary methods from Piano interface.
+ */
 public abstract class PianoSecondary implements Piano {
 
     /*
-     * Public Members ------------
+     * Protected Members ------------
      */
 
-    // These may have to be kernel methods instead
-    public abstract class Key {
+    /**
+     * Implementation of Key interface.
+     */
+    protected final class SimpleKey implements Piano.Key {
 
+        /**
+         * Field for holding the number identifier of the key. The number of the
+         * key should lie within [Piano offset, Piano offset + Piano length]
+         */
+        private int number;
+        /**
+         * Field for holding the time that the key will be active for. A time of
+         * 0.0 means that the key is inactive, and the opposite is true if it
+         * greater than 0.
+         */
+        private double time;
+        /**
+         * Field tha represents the pitch of the key. The pitch of the key
+         * should be greater than 0.
+         */
+        private double pitch;
+
+        /**
+         * Constructor for SimpleKey.
+         *
+         * @param num
+         *            incoming value for the number identifier of the key.
+         * @param keyPitch
+         *            incoming value for the pitch of the key.
+         * @requires num is within [Piano offset, Piano offset + Piano length]
+         *           and keyPitch > 0.
+         * @ensures this.number is not null, this.pitch is not null, this.time =
+         *          0.0
+         */
+        public SimpleKey(int num, double keyPitch) {
+            this.number = num;
+            this.pitch = keyPitch;
+            this.time = 0.0;
+        }
+
+        /**
+         * Returns this Key's numbered position relative to A0.
+         *
+         * @return the Key's position on a piano
+         */
+        @Override
         public int num() {
-            Sequence<Double> key =
+            return this.number;
         }
 
         /**
@@ -21,7 +65,10 @@ public abstract class PianoSecondary implements Piano {
          *
          * @return the Key's time left active
          */
-        double time();
+        @Override
+        public double time() {
+            return this.time;
+        }
 
         /**
          * Changes the active time of the key to the provided value.
@@ -31,14 +78,20 @@ public abstract class PianoSecondary implements Piano {
          * @requires newTime >= 0.0
          * @ensures this.time = newTime
          */
-        void setTime(double newTime);
+        @Override
+        public void setTime(double newTime) {
+            this.time = newTime;
+        }
 
         /**
          * Returns the pitch of the Key.
          *
          * @return the Key's pitch
          */
-        double pitch();
+        @Override
+        public double pitch() {
+            return this.pitch;
+        }
 
         /**
          * Changes the pitch of the Key to the provided value.
@@ -48,40 +101,114 @@ public abstract class PianoSecondary implements Piano {
          * @requires newPitch > 0
          * @ensures this.pitch = newPitch
          */
-        void setPitch(double newPitch);
+        @Override
+        public void setPitch(double newPitch) {
+            this.pitch = newPitch;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            boolean equal = false;
+            final double epsilon = 0.001;
+            if (obj != null) {
+                SimpleKey key = (SimpleKey) obj;
+                equal = this.num() == key.num()
+                        && (Math.abs(this.pitch() - key.pitch()) < epsilon)
+                        && (Math.abs(this.time() - key.time()) < epsilon);
+            }
+            return equal;
+        }
+
+        @Override
+        public int hashCode() {
+            return Integer.valueOf(this.num()).hashCode()
+                    + Double.valueOf(this.time()).hashCode()
+                    + Double.valueOf(this.pitch).hashCode();
+        }
+
+        @Override
+        public String toString() {
+            return "(" + this.num() + "," + this.time() + "," + this.pitch()
+                    + ")";
+        }
     }
 
+    /*
+     * Public Members --------------------------------
+     */
+
+    /*
+     * Common Memebers (from Object)------------------
+     */
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public boolean equals(Object obj) {
+        boolean equal = false;
+        if (obj != null) {
+            Piano objectPiano = (Piano) obj;
+            equal = (objectPiano.getTime() == this.getTime())
+                    && objectPiano.length() == this.length()
+                    && objectPiano.getOffset() == this.getOffset();
+        }
+        return equal;
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public int hashCode() {
+        return Double.valueOf(this.getTime()).hashCode()
+                + Integer.valueOf(this.length()).hashCode()
+                + Integer.valueOf(this.getOffset()).hashCode();
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public String toString() {
+        int offset = this.getOffset();
+        StringBuilder keyBuilder = new StringBuilder();
+        for (int i = 0; i < this.length(); i++) {
+            Piano.Key key = this.getKey(i + offset);
+            keyBuilder.append("\n" + key.toString());
+        }
+        return "(Time: " + this.getTime() + ", Length: " + this.length()
+                + ", Offset:" + this.getOffset() + "," + keyBuilder.toString()
+                + ")";
+    }
+
+    /*
+     * Non-Kernel Methods ------------------------------
+     */
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public void playKey(int keyNum, double pressTime) {
         Piano.Key key = this.getKey(keyNum);
         key.setTime(pressTime);
     }
 
-    // maybe deprecate this method, same can be accomplished with just getPressDuration > 0
-    @Override
-    public boolean isKeyActive(int keyNum) {
-        Piano.Key key = this.getKey(keyNum);
-        return key.time() > 0;
-    }
-
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public double getPressDuration(int keyNum) {
         Piano.Key key = this.getKey(keyNum);
         return key.time();
     }
 
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public double getPitch(int keyNum) {
         Piano.Key key = this.getKey(keyNum);
         return key.pitch();
     }
 
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public void setPitch(int keyNum, double pitch) {
         Piano.Key key = this.getKey(keyNum);
         key.setPitch(pitch);
     }
 
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public ArrayList<Piano.Key> getActiveKeys() {
         ArrayList<Piano.Key> activeKeys = new ArrayList<>();
@@ -94,12 +221,16 @@ public abstract class PianoSecondary implements Piano {
         return activeKeys;
     }
 
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public void passTime(int milliseconds) {
+        final double millisecondsToSecondsRate = 1000.0;
+        this.setTime(this.getTime() - milliseconds / millisecondsToSecondsRate);
         for (int i = 0; i < this.length(); i++) {
             Piano.Key key = this.getKey(i + this.getOffset());
             if (key.time() > 0) {
-                key.setTime(key.time() - milliseconds);
+                key.setTime(
+                        key.time() - milliseconds / millisecondsToSecondsRate);
             }
             if (key.time() < 0) {
                 key.setTime(0);

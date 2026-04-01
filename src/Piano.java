@@ -14,7 +14,6 @@ public interface Piano extends PianoKernel {
      * its pitch in hertz.
      */
     interface Key {
-
         /**
          * Returns this Key's numbered position relative to A0.
          *
@@ -69,17 +68,6 @@ public interface Piano extends PianoKernel {
      * @ensures the keyNum-th key's time = pressTime
      */
     void playKey(int keyNum, double pressTime);
-
-    /**
-     * Returns whether the given key is active.
-     *
-     * @param keyNum
-     *            the number for the Key that is being checked for activity
-     * @requires keyNum is in range of this
-     * @return whether the keyNum-th key is active, if the keyNum-th Key has a
-     *         time > 0
-     */
-    boolean isKeyActive(int keyNum);
 
     /**
      * Returns the press duration time of the given key.

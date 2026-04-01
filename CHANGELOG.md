@@ -34,4 +34,15 @@ the following form: YYYY.0M.0D.
 
 - Changed design to include Key object, methods for getting and setting each field of Key, a getKey kernel method, and a length kernel method
 - Changed return type of functions that would have returned a Sequence<Double> to return a Piano.Key
+
+## 2026.03.31
+
+### Added
+
+- Designed abstract class for Piano component
+
+### Updated
+
+- Changed design to include setTime kernel method, to remove isKeyActive secondary method due to overlap in utility with getPressDuration, and to have the return type secondary method getActiveKeys changed to ArrayList<Piano.Key> instead of Piano.Key[].
+- Added additional javadoc comments to pianoKernel
 ```
