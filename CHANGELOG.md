@@ -45,4 +45,5 @@ the following form: YYYY.0M.0D.
 
 - Changed design to include setTime kernel method, to remove isKeyActive secondary method due to overlap in utility with getPressDuration, and to have the return type secondary method getActiveKeys changed to ArrayList<Piano.Key> instead of Piano.Key[].
 - Added additional javadoc comments to pianoKernel
+- Added assertion statements for secondary method implementations to ensure method contracts are met
 ```
