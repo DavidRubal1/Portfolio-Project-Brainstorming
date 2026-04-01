@@ -80,6 +80,7 @@ public abstract class PianoSecondary implements Piano {
          */
         @Override
         public void setTime(double newTime) {
+            assert newTime >= 0;
             this.time = newTime;
         }
 
@@ -103,6 +104,7 @@ public abstract class PianoSecondary implements Piano {
          */
         @Override
         public void setPitch(double newPitch) {
+            assert newPitch > 0;
             this.pitch = newPitch;
         }
 
@@ -123,7 +125,7 @@ public abstract class PianoSecondary implements Piano {
         public int hashCode() {
             return Integer.valueOf(this.num()).hashCode()
                     + Double.valueOf(this.time()).hashCode()
-                    + Double.valueOf(this.pitch).hashCode();
+                    + Double.valueOf(this.pitch()).hashCode();
         }
 
         @Override
@@ -183,6 +185,10 @@ public abstract class PianoSecondary implements Piano {
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public void playKey(int keyNum, double pressTime) {
+        assert keyNum >= this.getOffset()
+                && keyNum <= this.getOffset() + this.length();
+        assert pressTime >= 0;
+
         Piano.Key key = this.getKey(keyNum);
         key.setTime(pressTime);
     }
@@ -190,6 +196,9 @@ public abstract class PianoSecondary implements Piano {
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public double getPressDuration(int keyNum) {
+        assert keyNum >= this.getOffset()
+                && keyNum <= this.getOffset() + this.length();
+
         Piano.Key key = this.getKey(keyNum);
         return key.time();
     }
@@ -204,6 +213,10 @@ public abstract class PianoSecondary implements Piano {
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public void setPitch(int keyNum, double pitch) {
+        assert keyNum >= this.getOffset()
+                && keyNum <= this.getOffset() + this.length();
+        assert pitch > 0;
+
         Piano.Key key = this.getKey(keyNum);
         key.setPitch(pitch);
     }
@@ -224,6 +237,8 @@ public abstract class PianoSecondary implements Piano {
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public void passTime(int milliseconds) {
+        assert milliseconds >= 0;
+
         final double millisecondsToSecondsRate = 1000.0;
         this.setTime(this.getTime() - milliseconds / millisecondsToSecondsRate);
         for (int i = 0; i < this.length(); i++) {
