@@ -110,21 +110,28 @@ public abstract class PianoSecondary implements Piano {
 
         @Override
         public boolean equals(Object obj) {
-            boolean equal = false;
-            final double epsilon = 0.001;
-            if (obj != null) {
-                SimpleKey key = (SimpleKey) obj;
-                equal = this.num() == key.num()
-                        && (Math.abs(this.pitch() - key.pitch()) < epsilon)
-                        && (Math.abs(this.time() - key.time()) < epsilon);
+            final double epsilon = 0.00001;
+            if (obj == null) {
+                return false;
             }
-            return equal;
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof Key)) {
+                return false;
+            }
+            Key objKey = (Key) obj;
+            if (this.num() != objKey.num()
+                    || (Math.abs(this.pitch() - objKey.pitch()) > epsilon)
+                    || (Math.abs(this.time() - objKey.time()) > epsilon)) {
+                return false;
+            }
+            return true;
         }
 
         @Override
         public int hashCode() {
-            return Integer.valueOf(this.num()).hashCode()
-                    + Double.valueOf(this.time()).hashCode()
+            return this.num() + Double.valueOf(this.time()).hashCode()
                     + Double.valueOf(this.pitch()).hashCode();
         }
 
@@ -133,6 +140,7 @@ public abstract class PianoSecondary implements Piano {
             return "(" + this.num() + "," + this.time() + "," + this.pitch()
                     + ")";
         }
+
     }
 
     /*
@@ -146,14 +154,29 @@ public abstract class PianoSecondary implements Piano {
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public boolean equals(Object obj) {
-        boolean equal = false;
-        if (obj != null) {
-            Piano objectPiano = (Piano) obj;
-            equal = (objectPiano.getTime() == this.getTime())
-                    && objectPiano.length() == this.length()
-                    && objectPiano.getOffset() == this.getOffset();
+        if (obj == null) {
+            return false;
         }
-        return equal;
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Piano)) {
+            return false;
+        }
+        Piano objPiano = (Piano) obj;
+        if (this.length() != objPiano.length()
+                || this.getTime() != objPiano.getTime()
+                || this.getOffset() != objPiano.getOffset()) {
+            return false;
+        }
+        // check each key for equality
+        for (int i = this.getOffset(); i < this.length()
+                + this.getOffset(); i++) {
+            if (!this.getKey(i).equals(objPiano.getKey(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
