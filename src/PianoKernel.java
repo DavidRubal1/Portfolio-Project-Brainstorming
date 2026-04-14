@@ -14,6 +14,7 @@ public interface PianoKernel extends Standard<Piano> {
      * @param keyNum
      *            the number associated with the key to be returned
      * @return the specified Key
+     * @ensures Key with identifier keyNum is returned, and this is unchanged
      */
     Piano.Key getKey(int keyNum);
 
@@ -21,13 +22,24 @@ public interface PianoKernel extends Standard<Piano> {
      * Returns the current time of the Piano's internal timer.
      *
      * @return the Piano's current time
+     * @ensures this.time is returned, and this is unchanged
      */
     double getTime();
+
+    /**
+     * Sets the Piano's internal timer to a new time.
+     *
+     * @param newTime
+     *            the time that the timer will be set to.
+     * @ensures this.time = newTime
+     */
+    void setTime(double newTime);
 
     /**
      * Returns the length of this, given by the number of Keys.
      *
      * @return this.length
+     * @ensures this.length is returned, and this is unchanged
      */
     int length();
 
@@ -35,6 +47,7 @@ public interface PianoKernel extends Standard<Piano> {
      * Returns the offset of the Piano's first key from the number 0.
      *
      * @return 1st Key's associated number
+     * @ensures this.offset is returned, and this is unchanged
      */
     int getOffset();
 

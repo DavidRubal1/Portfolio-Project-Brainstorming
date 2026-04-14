@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 /**
  * PianoKernel with secondary methods.
  *
@@ -11,7 +14,6 @@ public interface Piano extends PianoKernel {
      * its pitch in hertz.
      */
     interface Key {
-
         /**
          * Returns this Key's numbered position relative to A0.
          *
@@ -68,17 +70,6 @@ public interface Piano extends PianoKernel {
     void playKey(int keyNum, double pressTime);
 
     /**
-     * Returns whether the given key is active.
-     *
-     * @param keyNum
-     *            the number for the Key that is being checked for activity
-     * @requires keyNum is in range of this
-     * @return whether the keyNum-th key is active, if the keyNum-th Key has a
-     *         time > 0
-     */
-    boolean isKeyActive(int keyNum);
-
-    /**
      * Returns the press duration time of the given key.
      *
      * @param keyNum
@@ -113,14 +104,14 @@ public interface Piano extends PianoKernel {
     void setPitch(int keyNum, double pitch);
 
     /**
-     * Returns an array of the active Keys.
+     * Returns an ArrayList of the active Keys.
      *
-     * @return array of all active Keys in this
+     * @return ArrayList of all active Keys in this
      */
-    Piano.Key[] getActiveKeys();
+    ArrayList<Piano.Key> getActiveKeys();
 
     /**
-     * Increments the internal timer of the clock by the given time in
+     * Decrements the active time of each active key by the given time in
      * milliseconds.
      *
      * @param milliseconds
