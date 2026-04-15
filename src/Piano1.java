@@ -1,13 +1,20 @@
-import java.util.ArrayList;
-
 import components.map.Map;
-import components.sequence.Sequence;
-import components.sequence.Sequence1L;
-import components.simplewriter.SimpleWriter;
-import components.simplewriter.SimpleWriter1L;
+import components.map.Map1L;
 
 /**
- * TODO: ADD convention and correspondence
+ *
+ * @convention [this.time >= 0.0 with units of seconds] and [this.keyIndexOffset
+ *             is an offset from the standard position 1 at key A0] and
+ *             [this.pianoKeyboard is a Map with keys of integers between
+ *             this.offset and this.pianoKeyboard.length and values of
+ *             SimpleKeys]
+ *
+ *
+ * @correspondence this = [$this.pianoKeyboard as pairs of integer key positions
+ *                 and SimpleKey objects containing time and pitch information
+ *                 and $this.keyIndexOffset is the lowest position value of any
+ *                 Key in this.pianoKeyboard and is based on Key A0 as position
+ *                 1]
  *
  * @author David Rubal
  *
@@ -15,46 +22,14 @@ import components.simplewriter.SimpleWriter1L;
 public class Piano1 extends PianoSecondary {
 
     /*
-     * Private Members
+     * Private Members----------------------------------------------------------
      */
 
     /**
-     * Collection of keys of the piano keyboard represented as an ArrayList of
-     * double arrays
+     * Collection of keys of the piano keyboard represented as a Map of Integers
+     * (Key identifiers, with A0 being key 1), and SimpleKeys.
      */
     private Map<Integer, SimpleKey> pianoKeyboard;
-
-    // TODO: Add comment
-    private static final int KEY_PROPERTY_LENGTH = 3;
-
-    /**
-     * Indecies for the each key array of length 3.
-     */
-    enum KeyProperty {
-        /**
-         * Property to represent the number of the key, with A0 being key 1.
-         */
-        NUMBER(0),
-        /**
-         * Property to represent the activity state of the key, as well as a
-         * duration of time that can be decayed throught the passTime function.
-         */
-        TIME(1),
-        /**
-         * Property to represent the pitch of the key.
-         */
-        PITCH(2);
-
-        private final int index;
-
-        KeyProperty(int index) {
-            this.index = index;
-        }
-
-        public int index() {
-            return this.index;
-        }
-    }
 
     /**
      * Value for default construction of a piano object. This is the default
@@ -68,228 +43,156 @@ public class Piano1 extends PianoSecondary {
      */
     private static final int DEFAULT_START_KEY = 1;
     /**
-     * Number to represent the offset of the first key and index 0 of the
-     * sequence.
+     * Number to represent the offset of the keyboard and the position of the
+     * first key.
      */
     private int keyIndexOffset;
-
-    /**
-     * Time interval that the piano object runs at.
-     */
-    //private static final int millisecondFrameDelay = 16;
     /**
      * Total time acculmulated by the piano.
      */
     private double time;
 
-    // note frequency formula sourced from wikipedia
-    // https://en.wikipedia.org/wiki/Piano_key_frequencies
+    /**
+     * Provides the pitch of the associated key position, with A0 being key 1.
+     *
+     * @param keyNum
+     *            the positon of the given key
+     * @return the pitch of the given key
+     */
     private static double pitchFromKeyNum(int keyNum) {
+        // Equation below sourced from wikipedia
+        // https://en.wikipedia.org/wiki/Piano_key_frequencies
         return (Math.pow(2, ((keyNum - 49) / 12.0))) * 440;
     }
 
-    // Creates a new piano object, used by constructors
+    /**
+     * Creates a new piano object given a quantity of keys and position for the
+     * start key.
+     *
+     * @param numKeys
+     *            number of keys that the piano will have
+     * @param startKey
+     *            the position of the first key
+     *
+     */
     private void createNewRep(int numKeys, int startKey) {
         // create keyboard map and set pitch for each key
         this.keyIndexOffset = startKey;
         this.time = 0;
-        this.pianoKeyboard = new ArrayList<>();
+        this.pianoKeyboard = new Map1L<>();
         for (int i = 0; i < numKeys; i++) {
             // adds each note with the corresponding frequency for that note
-            SimpleKey key = new SimpleKey(i + startKey, pitchFromKeyNum(i + startKey))
-            this.pianoKeyboard.add(i, key);
+            SimpleKey key = new SimpleKey(pitchFromKeyNum(i + startKey));
+            this.pianoKeyboard.add(i + startKey, key);
         }
     }
 
-    /**
-     * Constructors
+    /*
+     * Constructors-------------------------------------------------------------
      */
 
     /**
-     * Standard Methods
-     */
-
-    /**
-     * Helper Methods
-     */
-
-    /**
-     * Kernel Methods
+     * No-args constructor.
      *
-     *
-     */
-
-    @Override
-    public void playKey(int keyNum, double pressTime) {
-        this.pianoKeyboard.get(keyNum - this.keyIndexOffset).setTime(pressTime);
-    }
-
-    @Override
-    public double getPressDuration(int keyNum) {
-        return this.pianoKeyboard.get(keyNum - this.keyIndexOffset).time();
-    }
-
-    @Override
-    public void setPitch(int keyNum, double pitch) {
-        this.pianoKeyboard.get(keyNum - this.keyIndexOffset).setPitch(pitch);
-    }
-
-    @Override
-    public double getPitch(int keyNum) {
-        return this.pianoKeyboard.get(keyNum - this.keyIndexOffset).pitch();
-    }
-
-    @Override
-    public int getOffset() {
-        return this.keyIndexOffset;
-    }
-
-    // Adds a key to either end of the keyboard
-    // requires that keyNum must be at either ends of the current keyboard
-    @Override
-    public void addKey(int keyNum) {
-        Sequence<Double> newKey = new Sequence1L<>();
-        newKey.add(KEYNUM_INDEX, keyNum * 1.0);
-        newKey.add(TIME_INDEX, 0.0);
-        newKey.add(PITCH_INDEX, pitchFromKeyNum(keyNum));
-        this.pianoKeyboard.add(keyNum - this.keyIndexOffset, newKey);
-        if (keyNum < this.pianoKeyboard.entry(0).entry(KEYNUM_INDEX)) {
-            this.keyIndexOffset -= 1;
-        }
-
-    }
-
-    // Removes a key from either end of the keyboard
-    // requires that the key removed
-    @Override
-    public Sequence<Double> removeKey(int keyNum) {
-        int oldOffset = this.keyIndexOffset;
-        this.keyIndexOffset += 1;
-
-        return this.pianoKeyboard.remove(keyNum - oldOffset);
-    }
-
-    // returns whether a key is active based on whether the time property is greater than 0
-    public boolean isKeyActive(int keyNum) {
-        return this.pianoKeyboard.entry(keyNum - this.keyIndexOffset)
-                .entry(TIME_INDEX) > 0;
-    }
-
-    /**
-     * No-args constructor
+     * @ensures |this| = DEFAULT_NUM_KEYS, position of first key =
+     *          DEFAULT_START_KEY
      */
     public Piano1() {
         this.createNewRep(DEFAULT_NUM_KEYS, DEFAULT_START_KEY);
     }
 
     /**
-     * Constructor with args for number of keys and the number of the starting
-     * key
+     * Constructor for a piano with custom number of keys, starting at a given
+     * key position.
+     *
+     * @param numKeys
+     *            the number of keys the piano will have
+     * @param startKey
+     *            the position that the first key will have
+     * @ensures |this| = numKeys, position of first key = startKey
      */
     public Piano1(int numKeys, int startKey) {
         this.createNewRep(numKeys, startKey);
     }
 
-    // Returns a sequence of sequences of doubles that are references to the keys that are active
+    /*
+     * Standard Methods---------------------------------------------------------
+     */
+
     @Override
-    public Sequence<Sequence<Double>> getActiveKeys() {
-        Sequence<Sequence<Double>> activeKeys = this.pianoKeyboard
-                .newInstance();
-        for (int i = 0; i < this.pianoKeyboard.length(); i++) {
-            if (this.isKeyActive(i + this.keyIndexOffset)) {
-                Sequence<Double> key = this.pianoKeyboard.remove(i);
-                // place active key in the sequence that will be returned
-                activeKeys.add(activeKeys.length(), key);
-                // place key back into keyboard to not lose the key
-                // and to prevent the loop from skipping
-                this.pianoKeyboard.add(i, key);
-            }
-        }
-        return activeKeys;
-    }
-
-    // increments the time of the piano
-    public void passTime() {
-
-        for (int i = 0; i < this.pianoKeyboard.length(); i++) {
-            Sequence<Double> key = this.pianoKeyboard.entry(i);
-            if (key.entry(TIME_INDEX) <= 0) {
-                key.replaceEntry(TIME_INDEX, 0.0);
-            } else {
-                key.replaceEntry(TIME_INDEX,
-                        key.entry(TIME_INDEX) - millisecondFrameDelay / 1000.0);
-            }
-        }
-        // time delay code sourced from
-        // Anju Aravind on https://stackoverflow.com/questions/24104313/how-do-i-make-a-delay-in-java
+    public final Piano1 newInstance() {
         try {
-            Thread.sleep(millisecondFrameDelay);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            return this.getClass().getConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError(
+                    "Cannot construct object of type " + this.getClass());
         }
-        this.time += millisecondFrameDelay / 1000.0;
-
     }
 
-    // The main method.
-    public void main(String[] args) {
-        Piano1 myPiano = new Piano1();
-        SimpleWriter out = new SimpleWriter1L();
-
-        double timeLimit = 10;
-        myPiano.playKey(13, 7.0);
-        while (myPiano.getTime() < timeLimit) {
-            double currentTime = myPiano.getTime();
-            Sequence<Sequence<Double>> activeKeys = myPiano.getActiveKeys();
-            out.print(" Active Keys: ");
-            for (Sequence<Double> key : activeKeys) {
-                out.print("Key " + key.entry(KEYNUM_INDEX).intValue()
-                        + " Pitch: " + key.entry(PITCH_INDEX) + " Hz ");
-            }
-            if (currentTime > 5 && currentTime < 5.1) {
-                myPiano.playKey(49, 2.0);
-            }
-
-            if (currentTime > 7 && currentTime < 7.1) {
-                myPiano.setPitch(5, 100);
-                myPiano.playKey(5, 2.0);
-            }
-            out.println(
-                    "        ||   Seconds Passed: " + currentTime + "    ||");
-            myPiano.passTime();
-        }
-
-        int pianoSize = 13, startingKey = 28;
-        Piano1 mySmallPiano = new Piano1(pianoSize, startingKey);
-        mySmallPiano.playKey(28, 3.0);
-        boolean keyAdded = false, keyRemoved = false;
-        while (mySmallPiano.getTime() < timeLimit) {
-            double currentTime = mySmallPiano.getTime();
-            Sequence<Sequence<Double>> activeKeys = mySmallPiano
-                    .getActiveKeys();
-            out.print(" Active Keys: ");
-            for (Sequence<Double> key : activeKeys) {
-                out.print("Key " + key.entry(KEYNUM_INDEX).intValue()
-                        + " Pitch: " + key.entry(PITCH_INDEX) + " Hz ");
-            }
-
-            if (currentTime > 4 && currentTime < 5.1 && !keyAdded) {
-                mySmallPiano.addKey(41);
-                mySmallPiano.playKey(41, 2);
-                keyAdded = true;
-            }
-            if (currentTime > 7 && currentTime < 7.1 && !keyRemoved) {
-                mySmallPiano.removeKey(28);
-                mySmallPiano.playKey(40, 2);
-                keyRemoved = true;
-            }
-
-            out.println(
-                    "        ||   Seconds Passed: " + currentTime + "    ||");
-            mySmallPiano.passTime();
-        }
-
-        out.close();
+    @Override
+    public final void clear() {
+        this.createNewRep(DEFAULT_NUM_KEYS, DEFAULT_START_KEY);
     }
 
+    @Override
+    public final void transferFrom(Piano inPiano) {
+        assert inPiano instanceof Piano1 : "Violation of: input is of dynamic type Piano1";
+
+        Piano1 piano = (Piano1) inPiano;
+        this.pianoKeyboard = piano.pianoKeyboard;
+        this.keyIndexOffset = piano.keyIndexOffset;
+        this.time = piano.time;
+        piano.createNewRep(DEFAULT_NUM_KEYS, DEFAULT_START_KEY);
+    }
+
+    /*
+     * Kernel Methods-----------------------------------------------------------
+     */
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public Piano.Key getKey(int keyNum) {
+        return this.pianoKeyboard.value(keyNum);
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public double getTime() {
+        return this.time;
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public void setTime(double newTime) {
+        this.time = newTime;
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public int length() {
+        return this.pianoKeyboard.size();
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public int getOffset() {
+        return this.keyIndexOffset;
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public void addKey(int keyNum) {
+        if (keyNum == this.keyIndexOffset) {
+            this.keyIndexOffset--;
+        }
+        this.pianoKeyboard.add(keyNum, new SimpleKey(this.getPitch(keyNum)));
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public Piano.Key removeKey(int keyNum) {
+        if (keyNum == this.keyIndexOffset) {
+            this.keyIndexOffset++;
+        }
+        return this.pianoKeyboard.remove(keyNum).value();
+    }
 }
