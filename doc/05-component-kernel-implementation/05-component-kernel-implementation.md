@@ -120,7 +120,6 @@ Below is further rationale/explanation for the rubric items above:
 > and interpreted (i.e., by correspondence).
 
 I will represent my Piano component as an ArrayList of Keys. The Keys will be represented by an array of their properties. I believe that ArrayLists will be a good representation due to their capability to access any element given its index and to dynamically change size. Using arrays for keys also benefits from indexing, and dynamic sizing is not needed for a fixed number of properties.
-<!-- TODO: select a representation and explain why -->
 
 > To start making your kernel implementation, make a branch off of main in your
 > new repo called something like `kernel-implementation`. There are many ways to
@@ -142,7 +141,6 @@ I will represent my Piano component as an ArrayList of Keys. The Keys will be re
 > rebase strategies described [here](https://stackoverflow.com/questions/35790561/working-while-waiting-for-pending-pr)
 > and [here](https://stackoverflow.com/questions/18021888/continue-working-on-a-git-branch-after-making-a-pull-request).
 
-<!-- TODO: make a new branch from main then delete this comment -->
 
 ## Assignment Tasks
 
