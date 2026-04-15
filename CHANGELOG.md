@@ -46,4 +46,17 @@ the following form: YYYY.0M.0D.
 - Changed design to include setTime kernel method, to remove isKeyActive secondary method due to overlap in utility with getPressDuration, and to have the return type secondary method getActiveKeys changed to ArrayList<Piano.Key> instead of Piano.Key[].
 - Added additional javadoc comments to pianoKernel
 - Added assertion statements for secondary method implementations to ensure method contracts are met
+
+## 2026.04.14
+
+### Added
+
+- Designed kernel implementation for Piano component
+
+### Updated
+
+- Changed design to include standard methods.
+- Removed the "number" field and related methods from the Key interface to reduce redundancy.
+- Reworked the equals() method of PianoSecondary and SimpleKey to properly check every case of equality.
+- Renamed file previously named Piano1.java to ProofOfConcept.java.
 ```

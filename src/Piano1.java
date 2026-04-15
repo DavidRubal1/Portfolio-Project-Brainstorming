@@ -2,19 +2,22 @@ import components.map.Map;
 import components.map.Map1L;
 
 /**
+ * Piano object represented as a Map with keys of integers denoting Key position
+ * and values of SimpleKeys. Includes with implemented kernel methods.
  *
- * @convention [this.time >= 0.0 with units of seconds] and [this.keyIndexOffset
- *             is an offset from the standard position 1 at key A0] and
- *             [this.pianoKeyboard is a Map with keys of integers between
- *             this.offset and this.pianoKeyboard.length and values of
+ * @convention [this.time >= 0.0 as time in units of seconds] and
+ *             [this.keyIndexOffset is an offset from the standard position 1 at
+ *             key A0] and [this.pianoKeyboard is a Map with keys of integers
+ *             between this.offset and this.pianoKeyboard.length and values of
  *             SimpleKeys]
  *
  *
  * @correspondence this = [$this.pianoKeyboard as pairs of integer key positions
- *                 and SimpleKey objects containing time and pitch information
- *                 and $this.keyIndexOffset is the lowest position value of any
+ *                 and SimpleKey objects containing time and pitch information]
+ *                 and [$this.keyIndexOffset is the lowest position value of any
  *                 Key in this.pianoKeyboard and is based on Key A0 as position
- *                 1]
+ *                 1] and [this.time is an internal timer that counts up from 0
+ *                 as the piano is used]
  *
  * @author David Rubal
  *
