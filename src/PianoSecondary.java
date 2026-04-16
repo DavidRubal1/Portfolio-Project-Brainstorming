@@ -1,3 +1,4 @@
+import java.security.Key;
 import java.util.ArrayList;
 
 /**
@@ -15,11 +16,6 @@ public abstract class PianoSecondary implements Piano {
     protected final class SimpleKey implements Piano.Key {
 
         /**
-         * Field for holding the number identifier of the key. The number of the
-         * key should lie within [Piano offset, Piano offset + Piano length]
-         */
-        private int number;
-        /**
          * Field for holding the time that the key will be active for. A time of
          * 0.0 means that the key is inactive, and the opposite is true if it
          * greater than 0.
@@ -34,29 +30,15 @@ public abstract class PianoSecondary implements Piano {
         /**
          * Constructor for SimpleKey.
          *
-         * @param num
-         *            incoming value for the number identifier of the key.
          * @param keyPitch
          *            incoming value for the pitch of the key.
          * @requires num is within [Piano offset, Piano offset + Piano length]
          *           and keyPitch > 0.
-         * @ensures this.number is not null, this.pitch is not null, this.time =
-         *          0.0
+         * @ensures this.pitch is not null, this.time = 0.0
          */
-        public SimpleKey(int num, double keyPitch) {
-            this.number = num;
+        public SimpleKey(double keyPitch) {
             this.pitch = keyPitch;
             this.time = 0.0;
-        }
-
-        /**
-         * Returns this Key's numbered position relative to A0.
-         *
-         * @return the Key's position on a piano
-         */
-        @Override
-        public int num() {
-            return this.number;
         }
 
         /**
@@ -121,8 +103,7 @@ public abstract class PianoSecondary implements Piano {
                 return false;
             }
             Key objKey = (Key) obj;
-            if (this.num() != objKey.num()
-                    || (Math.abs(this.pitch() - objKey.pitch()) > epsilon)
+            if ((Math.abs(this.pitch() - objKey.pitch()) > epsilon)
                     || (Math.abs(this.time() - objKey.time()) > epsilon)) {
                 return false;
             }
@@ -131,14 +112,13 @@ public abstract class PianoSecondary implements Piano {
 
         @Override
         public int hashCode() {
-            return this.num() + Double.valueOf(this.time()).hashCode()
+            return Double.valueOf(this.time()).hashCode()
                     + Double.valueOf(this.pitch()).hashCode();
         }
 
         @Override
         public String toString() {
-            return "(" + this.num() + "," + this.time() + "," + this.pitch()
-                    + ")";
+            return "(" + this.time() + "," + this.pitch() + ")";
         }
 
     }
@@ -212,8 +192,7 @@ public abstract class PianoSecondary implements Piano {
                 && keyNum <= this.getOffset() + this.length();
         assert pressTime >= 0;
 
-        Piano.Key key = this.getKey(keyNum);
-        key.setTime(pressTime);
+        this.getKey(keyNum).setTime(pressTime);
     }
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
@@ -222,15 +201,13 @@ public abstract class PianoSecondary implements Piano {
         assert keyNum >= this.getOffset()
                 && keyNum <= this.getOffset() + this.length();
 
-        Piano.Key key = this.getKey(keyNum);
-        return key.time();
+        return this.getKey(keyNum).time();
     }
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public double getPitch(int keyNum) {
-        Piano.Key key = this.getKey(keyNum);
-        return key.pitch();
+        return this.getKey(keyNum).pitch();
     }
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
@@ -240,8 +217,7 @@ public abstract class PianoSecondary implements Piano {
                 && keyNum <= this.getOffset() + this.length();
         assert pitch > 0;
 
-        Piano.Key key = this.getKey(keyNum);
-        key.setPitch(pitch);
+        this.getKey(keyNum).setPitch(pitch);
     }
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
