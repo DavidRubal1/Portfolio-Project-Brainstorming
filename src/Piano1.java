@@ -34,6 +34,7 @@ public class Piano1 extends PianoSecondary {
      */
     private Map<Integer, SimpleKey> pianoKeyboard;
 
+    // TODO: should I move these higher up in the hierarchy since they should be constants?
     /**
      * Value for default construction of a piano object. This is the default
      * number of keys to add to the keyboard.
@@ -184,7 +185,7 @@ public class Piano1 extends PianoSecondary {
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public void addKey(int keyNum) {
-        if (keyNum == this.keyIndexOffset) {
+        if (keyNum + 1 == this.keyIndexOffset) {
             this.keyIndexOffset--;
         }
         this.pianoKeyboard.add(keyNum, new SimpleKey(this.getPitch(keyNum)));
@@ -193,7 +194,7 @@ public class Piano1 extends PianoSecondary {
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public Piano.Key removeKey(int keyNum) {
-        if (keyNum == this.keyIndexOffset) {
+        if (keyNum + 1 == this.keyIndexOffset) {
             this.keyIndexOffset++;
         }
         return this.pianoKeyboard.remove(keyNum).value();

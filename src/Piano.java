@@ -65,7 +65,7 @@ public interface Piano extends PianoKernel {
      * @param pressTime
      *            the duration of the press
      * @requires pressTime >= 0, keyNum is in range of this
-     * @ensures the keyNum-th key's time = pressTime
+     * @ensures pressTime = time of key at position keyNum
      */
     void playKey(int keyNum, double pressTime);
 
