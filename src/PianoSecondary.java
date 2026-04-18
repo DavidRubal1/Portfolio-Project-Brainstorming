@@ -61,7 +61,7 @@ public abstract class PianoSecondary implements Piano {
          * @ensures this.time = newTime
          */
         @Override
-        public void setTime(double newTime) {
+        public void play(double newTime) {
             assert newTime >= 0;
             this.time = newTime;
         }
@@ -187,41 +187,6 @@ public abstract class PianoSecondary implements Piano {
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
-    public void playKey(int keyNum, double pressTime) {
-        assert keyNum >= this.getOffset()
-                && keyNum <= this.getOffset() + this.length();
-        assert pressTime >= 0;
-
-        this.getKey(keyNum).setTime(pressTime);
-    }
-
-    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
-    @Override
-    public double getPressDuration(int keyNum) {
-        assert keyNum >= this.getOffset()
-                && keyNum <= this.getOffset() + this.length();
-
-        return this.getKey(keyNum).time();
-    }
-
-    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
-    @Override
-    public double getPitch(int keyNum) {
-        return this.getKey(keyNum).pitch();
-    }
-
-    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
-    @Override
-    public void setPitch(int keyNum, double pitch) {
-        assert keyNum >= this.getOffset()
-                && keyNum <= this.getOffset() + this.length();
-        assert pitch > 0;
-
-        this.getKey(keyNum).setPitch(pitch);
-    }
-
-    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
-    @Override
     public ArrayList<Piano.Key> getActiveKeys() {
         ArrayList<Piano.Key> activeKeys = new ArrayList<>();
         for (int i = 0; i < this.length(); i++) {
@@ -243,11 +208,10 @@ public abstract class PianoSecondary implements Piano {
         for (int i = 0; i < this.length(); i++) {
             Piano.Key key = this.getKey(i + this.getOffset());
             if (key.time() > 0) {
-                key.setTime(
-                        key.time() - milliseconds / millisecondsToSecondsRate);
+                key.play(key.time() - milliseconds / millisecondsToSecondsRate);
             }
             if (key.time() < 0) {
-                key.setTime(0);
+                key.play(0);
             }
         }
     }

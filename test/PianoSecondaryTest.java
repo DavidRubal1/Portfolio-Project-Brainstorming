@@ -1,44 +1,45 @@
+// Do i include tests for equals, hashCode, and toString?
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 
-// Do i include tests for equals, hashCode, and toString?
 public class PianoSecondaryTest {
+
     @Test
-    public void testPlayKey() {
+    public void testGetActiveKeysNoActiveKeys() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
+        ArrayList<Piano.Key> keyList = p.getActiveKeys();
+        ArrayList<Piano.Key> keyListExpected = new ArrayList();
 
-        p.playKey(1, 3.0);
-
-        Piano.Key k = p.getKey(1);
-
-        assertEquals(27.5, k.pitch(), 0.001);
-        assertEquals(3.0, k.time());
-        assertFalse(pCopy.equals(p));
+        assertEquals(keyListExpected, keyList);
+        assertEquals(pCopy, p);
     }
 
     @Test
-    public void testGetPressDuration() {
+    public void testGetActiveKeysOneActiveKey() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
+        Piano.Key k = p.getKey(1);
+        k.setTime()
+        ArrayList<Piano.Key> keyList = p.getActiveKeys();
+        ArrayList<Piano.Key> keyListExpected = new ArrayList();
 
-        assertEquals(0.0, p.getPressDuration(1));
-        assertTrue(pCopy, p);
+        assertEquals(keyListExpected, keyList);
+        assertEquals(pCopy, p);
     }
 
     @Test
-    public void testGetPitch() {
+    public void testGetKeyFirstKey() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
+        ArrayList<Piano.Key> keyList = p.getActiveKeys();
+        ArrayList<Piano.Key> keyListExpected = new ArrayList();
 
-        p.setPitch(1, 300.2);
-
-        Piano.Key k = p.getKey(1);
-
-        assertEquals(300.2, k.pitch());
-        assertFalse(pCopy.equals(p));
+        assertEquals(keyListExpected, keyList);
+        assertEquals(pCopy, p);
     }
 }

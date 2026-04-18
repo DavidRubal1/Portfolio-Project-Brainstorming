@@ -8,18 +8,69 @@ import java.util.ArrayList;
  */
 public interface Piano extends PianoKernel {
 
+    // IS THIS A GOOD IDEA OR THE WORST THING EVER
+    enum KeyName {
+        //Key Names and their respective pitches (Hz)
+        C0(),
+        C#0(),
+        Db0(),
+        D0(),
+        D#0(),
+        Eb0(),
+        E0(),
+        F0(),
+        F#0(),
+        Gb0(),
+        G0(),
+        G#0(),
+        Ab0(),
+        A0(),
+        A#0(),
+        Bb0(),
+        B0(),
+        C1(),
+        C#1(),
+        Db1(),
+        D1(),
+        D#1(),
+        Eb1(),
+        E1(),
+        F1(),
+        F#1(),
+        Gb1(),
+        G1(),
+        G#1(),
+        Ab1(),
+        A1(),
+        A#1(),
+        Bb1(),
+        B1(),
+        C2(),
+        C#2(),
+        Db2(),
+        D2(),
+        D#2(),
+        Eb2(),
+        E2(),
+        F2(),
+        F#2(),
+        Gb2(),
+        G2(),
+        G#2(),
+        Ab2(),
+        A2(),
+        A#2(),
+        Bb2(),
+        B2(),
+        C3(),
+    }
+
     /**
      * A key within the piano object. Each key holds information for its
      * positional number with respect to A0, the time it has left active, and
      * its pitch in hertz.
      */
     interface Key {
-        /**
-         * Returns this Key's numbered position relative to A0.
-         *
-         * @return the Key's position on a piano
-         */
-        int num();
 
         /**
          * Returns the time left for which the key is active. Returns 0.0 if the
@@ -37,7 +88,7 @@ public interface Piano extends PianoKernel {
          * @requires newTime >= 0.0
          * @ensures this.time = newTime
          */
-        void setTime(double newTime);
+        void play(double newTime);
 
         /**
          * Returns the pitch of the Key.
@@ -56,52 +107,6 @@ public interface Piano extends PianoKernel {
          */
         void setPitch(double newPitch);
     }
-
-    /**
-     * Plays the key by updating the respective Key's active time.
-     *
-     * @param keyNum
-     *            the Key that is being pressed
-     * @param pressTime
-     *            the duration of the press
-     * @requires pressTime >= 0, keyNum is in range of this
-     * @ensures pressTime = time of key at position keyNum
-     */
-    void playKey(int keyNum, double pressTime);
-
-    /**
-     * Returns the press duration time of the given key.
-     *
-     * @param keyNum
-     *            the number for the Key that is to have its time reported
-     * @requires keyNum is in range of this
-     * @return the keyNum-th Key's press duration, which is the time value
-     *         associated with that key
-     */
-    double getPressDuration(int keyNum);
-
-    /**
-     * Returns the pitch of the given Key.
-     *
-     * @param keyNum
-     *            the number for the Key that is to have its pitch reported
-     * @requires keyNum is in range of this
-     * @return the keyNum-th Key's pitch
-     */
-    double getPitch(int keyNum);
-
-    /**
-     * Changes the pitch of the given key to a specified value.
-     *
-     * @param keyNum
-     *            the number for the Key that is to have its pitch changed
-     * @param pitch
-     *            the pitch that the given Key's pitch is to be changed to
-     * @replaces the pitch of the keyNum-th key of this
-     * @requires keyNum is in range of this, pitch >= 0
-     * @ensures the pitch of the keyNum-th key of this = pitch
-     */
-    void setPitch(int keyNum, double pitch);
 
     /**
      * Returns an ArrayList of the active Keys.
