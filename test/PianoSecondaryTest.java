@@ -12,8 +12,8 @@ public class PianoSecondaryTest {
     public void testGetActiveKeysNoActiveKeys() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
-        ArrayList<Piano.Key> keyList = p.getActiveKeys();
-        ArrayList<Piano.Key> keyListExpected = new ArrayList();
+        Piano.Key[] keyList = p.getActiveKeys();
+        Piano.Key[] keyListExpected = new ArrayList();
 
         assertEquals(keyListExpected, keyList);
         assertEquals(pCopy, p);
@@ -24,9 +24,9 @@ public class PianoSecondaryTest {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
         Piano.Key k = p.getKey(1);
-        k.setTime()
-        ArrayList<Piano.Key> keyList = p.getActiveKeys();
-        ArrayList<Piano.Key> keyListExpected = new ArrayList();
+        k.play(3.0);
+        Piano.Key[] keyList = p.getActiveKeys();
+        Piano.Key[] keyListExpected = new ArrayList();
 
         assertEquals(keyListExpected, keyList);
         assertEquals(pCopy, p);
@@ -36,8 +36,8 @@ public class PianoSecondaryTest {
     public void testGetKeyFirstKey() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
-        ArrayList<Piano.Key> keyList = p.getActiveKeys();
-        ArrayList<Piano.Key> keyListExpected = new ArrayList();
+        Piano.Key[] keyList = p.getActiveKeys();
+        Piano.Key[] keyListExpected = new ArrayList();
 
         assertEquals(keyListExpected, keyList);
         assertEquals(pCopy, p);

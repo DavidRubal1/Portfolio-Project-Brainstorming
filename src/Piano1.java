@@ -52,7 +52,7 @@ public class Piano1 extends PianoSecondary {
      */
     private int keyIndexOffset;
     /**
-     * Total time acculmulated by the piano.
+     * Total time acculmulated by the piano in seconds.
      */
     private double time;
 

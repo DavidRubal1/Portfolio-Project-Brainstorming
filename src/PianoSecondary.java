@@ -144,15 +144,13 @@ public abstract class PianoSecondary implements Piano {
             return false;
         }
         Piano objPiano = (Piano) obj;
-        if (this.length() != objPiano.length()
-                || this.getTime() != objPiano.getTime()
-                || this.getOffset() != objPiano.getOffset()) {
+        if (this.length() != objPiano.length() || this.time() != objPiano.time()
+                || this.offset() != objPiano.offset()) {
             return false;
         }
         // check each key for equality
-        for (int i = this.getOffset(); i < this.length()
-                + this.getOffset(); i++) {
-            if (!this.getKey(i).equals(objPiano.getKey(i))) {
+        for (int i = this.offset(); i < this.length() + this.offset(); i++) {
+            if (!this.key(i).equals(objPiano.key(i))) {
                 return false;
             }
         }
@@ -162,22 +160,22 @@ public abstract class PianoSecondary implements Piano {
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public int hashCode() {
-        return Double.valueOf(this.getTime()).hashCode()
+        return Double.valueOf(this.time()).hashCode()
                 + Integer.valueOf(this.length()).hashCode()
-                + Integer.valueOf(this.getOffset()).hashCode();
+                + Integer.valueOf(this.offset()).hashCode();
     }
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
     public String toString() {
-        int offset = this.getOffset();
+        int offset = this.offset();
         StringBuilder keyBuilder = new StringBuilder();
         for (int i = 0; i < this.length(); i++) {
-            Piano.Key key = this.getKey(i + offset);
+            Piano.Key key = this.key(i + offset);
             keyBuilder.append("\n" + key.toString());
         }
-        return "(Time: " + this.getTime() + ", Length: " + this.length()
-                + ", Offset:" + this.getOffset() + "," + keyBuilder.toString()
+        return "(Time: " + this.time() + ", Length: " + this.length()
+                + ", Offset:" + this.offset() + "," + keyBuilder.toString()
                 + ")";
     }
 
@@ -187,15 +185,15 @@ public abstract class PianoSecondary implements Piano {
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
-    public ArrayList<Piano.Key> getActiveKeys() {
+    public Piano.Key[] getActiveKeys() {
         ArrayList<Piano.Key> activeKeys = new ArrayList<>();
         for (int i = 0; i < this.length(); i++) {
-            Piano.Key key = this.getKey(i + this.getOffset());
+            Piano.Key key = this.key(i + this.offset());
             if (key.time() > 0) {
                 activeKeys.add(key);
             }
         }
-        return activeKeys;
+        return activeKeys.toArray();
     }
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
@@ -204,9 +202,9 @@ public abstract class PianoSecondary implements Piano {
         assert milliseconds >= 0;
 
         final double millisecondsToSecondsRate = 1000.0;
-        this.setTime(this.getTime() - milliseconds / millisecondsToSecondsRate);
+        this.setTime(this.time() - milliseconds / millisecondsToSecondsRate);
         for (int i = 0; i < this.length(); i++) {
-            Piano.Key key = this.getKey(i + this.getOffset());
+            Piano.Key key = this.key(i + this.offset());
             if (key.time() > 0) {
                 key.play(key.time() - milliseconds / millisecondsToSecondsRate);
             }
