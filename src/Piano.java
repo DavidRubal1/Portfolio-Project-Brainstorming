@@ -49,11 +49,12 @@ public interface Piano extends PianoKernel {
     }
 
     /**
-     * Returns an array of the active Keys.
+     * Returns an ordered array of the active Keys from lowest key position to
+     * highest.
      *
      * @return array of all active Keys in this
      */
-    Piano.Key[] getActiveKeys();
+    Piano.Key[] activeKeys();
 
     /**
      * Increments the Piano's internal timer and decrements the active time of

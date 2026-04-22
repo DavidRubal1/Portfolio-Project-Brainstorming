@@ -160,7 +160,7 @@ public class Piano1 extends PianoSecondary {
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
-    public double getTime() {
+    public double time() {
         return this.time;
     }
 
@@ -178,7 +178,7 @@ public class Piano1 extends PianoSecondary {
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
-    public int getOffset() {
+    public int offset() {
         return this.keyIndexOffset;
     }
 
@@ -188,7 +188,8 @@ public class Piano1 extends PianoSecondary {
         if (keyNum + 1 == this.keyIndexOffset) {
             this.keyIndexOffset--;
         }
-        this.pianoKeyboard.add(keyNum, new SimpleKey(this.getPitch(keyNum)));
+        this.pianoKeyboard.add(keyNum,
+                new SimpleKey(this.getKey(keyNum).pitch()));
     }
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN

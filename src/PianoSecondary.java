@@ -185,7 +185,7 @@ public abstract class PianoSecondary implements Piano {
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
-    public Piano.Key[] getActiveKeys() {
+    public Piano.Key[] activeKeys() {
         ArrayList<Piano.Key> activeKeys = new ArrayList<>();
         for (int i = 0; i < this.length(); i++) {
             Piano.Key key = this.key(i + this.offset());
