@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 /**
- * Organ Proof of Concept. Use case of the Piano Component as part of
- * representation for a two manual organ with a pedal board.
+ * Organ Proof of Concept. This is a use case of the Piano Component for a two
+ * manual organ with a pedal board and stops.
  *
  * @author David Rubal
  *
@@ -77,7 +77,7 @@ public class OrganPOC {
         pedalBoardMutations.remove(stopLength);
     }
 
-    void removeAllStops() {
+    void resetAllStops() {
         greatMutations.clear();
         swellMutations.clear();
         pedalBoardMutations.clear();
@@ -92,6 +92,7 @@ public class OrganPOC {
                 pitchList.add(k.pitch() * Math.pow(pipeLength / 8.0, -1));
             }
         }
+        return pitchList.toArray();
     }
 
     // returns an array of all the pitches being played on the swell
@@ -103,6 +104,7 @@ public class OrganPOC {
                 pitchList.add(k.pitch() * Math.pow(pipeLength / 8.0, -1));
             }
         }
+        return pitchList.toArray();
     }
 
     // returns an array of all the pitches being played on the swell
@@ -114,6 +116,7 @@ public class OrganPOC {
                 pitchList.add(k.pitch() * Math.pow(pipeLength / 8.0, -1));
             }
         }
+        return pitchList.toArray();
     }
 
 }
