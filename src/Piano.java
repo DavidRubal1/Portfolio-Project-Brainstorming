@@ -15,13 +15,6 @@ public interface Piano extends PianoKernel {
      */
     interface Key {
         /**
-         * Returns this Key's numbered position relative to A0.
-         *
-         * @return the Key's position on a piano
-         */
-        int num();
-
-        /**
          * Returns the time left for which the key is active. Returns 0.0 if the
          * key is not active.
          *

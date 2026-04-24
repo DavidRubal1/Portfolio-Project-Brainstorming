@@ -119,8 +119,7 @@ Below is further rationale/explanation for the rubric items above:
 > discuss how that representation will be restricted (i.e., by convention)
 > and interpreted (i.e., by correspondence).
 
-I will represent my Piano component as an ArrayList of Keys. The Keys will be represented by an array of their properties. I believe that ArrayLists will be a good representation due to their capability to access any element given its index and to dynamically change size. Using arrays for keys also benefits from indexing, and dynamic sizing is not needed for a fixed number of properties.
-<!-- TODO: select a representation and explain why -->
+I will represent my Piano component as Map of <Integer, SimpleKey>. Having Map keys be integers allows for my methods to easily access a specific key given a key position. Having SimpleKeys as my map values will make it easier to hold the multiple points of information that a key contains in one place.
 
 > To start making your kernel implementation, make a branch off of main in your
 > new repo called something like `kernel-implementation`. There are many ways to
@@ -142,7 +141,6 @@ I will represent my Piano component as an ArrayList of Keys. The Keys will be re
 > rebase strategies described [here](https://stackoverflow.com/questions/35790561/working-while-waiting-for-pending-pr)
 > and [here](https://stackoverflow.com/questions/18021888/continue-working-on-a-git-branch-after-making-a-pull-request).
 
-<!-- TODO: make a new branch from main then delete this comment -->
 
 ## Assignment Tasks
 
@@ -162,8 +160,6 @@ The following sections detail everything that you should do once you've
 completed the assignment.
 
 ### Changelog
-
-<!-- TODO: update CHANGELOG then delete this comment -->
 
 At the end of every assignment, you should update the
 [CHANGELOG.md](../../CHANGELOG.md) file found in the root of the project folder.
@@ -198,7 +194,6 @@ request merge (or at least tag your commits). This is not required.
 
 ### Submission
 
-<!-- TODO: read the submission instructions then delete this comment -->
 
 Assuming that your project is in a GitHub repo somewhere and your changes are on
 a proof-of-concept branch, then what we'll want you to do is create a pull
