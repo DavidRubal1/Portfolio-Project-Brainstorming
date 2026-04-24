@@ -32,8 +32,8 @@ public abstract class PianoSecondary implements Piano {
          *
          * @param keyPitch
          *            incoming value for the pitch of the key.
-         * @requires num is within [Piano offset, Piano offset + Piano length]
-         *           and keyPitch > 0.
+         * @requires keyPitch is within [Piano offset, Piano offset + Piano
+         *           length] and keyPitch > 0.
          * @ensures this.pitch is not null, this.time = 0.0
          */
         public SimpleKey(double keyPitch) {
@@ -61,7 +61,7 @@ public abstract class PianoSecondary implements Piano {
          * @ensures this.time = newTime
          */
         @Override
-        public void play(double newTime) {
+        public void setTime(double newTime) {
             assert newTime >= 0;
             this.time = newTime;
         }
@@ -128,7 +128,7 @@ public abstract class PianoSecondary implements Piano {
      */
 
     /*
-     * Common Memebers (from Object)------------------
+     * Common Members (from Object)------------------
      */
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
@@ -185,6 +185,18 @@ public abstract class PianoSecondary implements Piano {
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
     @Override
+    public void play(int keyPos, double time) {
+        this.key(keyPos).setTime(time);
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
+    public void tune(int keyPos, double pitch) {
+        this.key(keyPos).setPitch(pitch);
+    }
+
+    // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
+    @Override
     public Piano.Key[] activeKeys() {
         ArrayList<Piano.Key> activeKeys = new ArrayList<>();
         for (int i = 0; i < this.length(); i++) {
@@ -193,7 +205,7 @@ public abstract class PianoSecondary implements Piano {
                 activeKeys.add(key);
             }
         }
-        return activeKeys.toArray();
+        return activeKeys.toArray(new Piano.Key[activeKeys.size()]);
     }
 
     // CHECKSTYLE: ALLOW THIS METHOD TO BE OVERRIDDEN
@@ -206,10 +218,11 @@ public abstract class PianoSecondary implements Piano {
         for (int i = 0; i < this.length(); i++) {
             Piano.Key key = this.key(i + this.offset());
             if (key.time() > 0) {
-                key.play(key.time() - milliseconds / millisecondsToSecondsRate);
+                key.setTime(
+                        key.time() - milliseconds / millisecondsToSecondsRate);
             }
             if (key.time() < 0) {
-                key.play(0);
+                key.setTime(0);
             }
         }
     }

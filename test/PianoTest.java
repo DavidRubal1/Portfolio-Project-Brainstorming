@@ -4,102 +4,73 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class PianoSecondaryTest {
+public final class PianoTest {
 
-    // In this case, time() and play() have overlap in
-    // their test cases, since one is reliant on the other to check.
+    final double epsilon = epsilon;
+
     @Test
-    public void testSimpleKeyTimeInactive() {
+    public void testPlayFirstKey() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
-        int kTime = p.key(1).time();
-        int kTimeCopy = pCopy.key(1).time();
+        p.play(1, 5.0);
+        pCopy.play(1, 5.0);
 
-        assertEquals(0.0, kTime);
-        assertEquals(kTimeCopy, kTime);
+        assertEquals(5.0, p.key(1).time(), epsilon);
         assertEquals(pCopy, p);
     }
 
     @Test
-    public void testSimpleKeyTimeActive() {
+    public void testPlayLastKey() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
-        p.key(1).play(3.0);
-        pCopy.key(1).play(3.0);
-        int kTime = p.key(1).time();
-        int kTimeCopy = pCopy.key(1).time();
+        p.play(88, 5.0);
+        pCopy.play(88, 5.0);
 
-        assertEquals(3.0, kTime);
-        assertEquals(kTimeCopy, kTime);
+        assertEquals(5.0, p.key(88).time(), epsilon);
         assertEquals(pCopy, p);
     }
 
     @Test
-    public void testSimpleKeyPitchKey1() {
+    public void testPlayLastKeyLong() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
+        p.play(88, 36000);
+        pCopy.play(88, 36000);
 
-        double kPitch = p.key(1).pitch();
-        double kPitchCopy = pCopy.key(1).pitch();
-
-        assertEquals(27.5, kPitch, 0.0001);
-        assertEquals(kPitchCopy, kPitch);
+        assertEquals(36000, p.key(88).time(), epsilon);
         assertEquals(pCopy, p);
     }
 
     @Test
-    public void testSimpleKeyPitchKey40() {
+    public void testTuneFirstKeyGreater() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
+        p.tune(1, 28.5);
+        pCopy.tune(1, 28.5);
 
-        double kPitch = p.key(40).pitch();
-        double kPitchCopy = pCopy.key(40).pitch();
-
-        assertEquals(261.6256, kPitch, 0.00001);
-        assertEquals(kPitchCopy, kPitch);
+        assertEquals(28.5, p.key(1).pitch(), epsilon);
         assertEquals(pCopy, p);
     }
 
     @Test
-    public void testSimpleKeyPitchKey88() {
+    public void testTuneFirstKeyLess() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
+        p.tune(1, 0.5);
+        pCopy.tune(1, 0.5);
 
-        double kPitch = p.key(88).pitch();
-        double kPitchCopy = pCopy.key(88).pitch();
-
-        assertEquals(4186.009, kPitch, 0.00001);
-        assertEquals(kPitchCopy, kPitch);
+        assertEquals(0.5, p.key(1).pitch(), epsilon);
         assertEquals(pCopy, p);
     }
 
     @Test
-    public void testSimpleKeySetPitchHigher() {
+    public void testTuneMiddleKeyGreater() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
+        p.tune(49, 4000.0);
+        pCopy.tune(1, 4000.0);
 
-        p.key(1).setPitch(500);
-        pCopy.key(1).setPitch(500);
-        double kPitch = p.key(1).pitch();
-        double kPitchCopy = pCopy.key(1).pitch();
-
-        assertEquals(500, kPitch, 0.00001);
-        assertEquals(kPitchCopy, kPitch);
-        assertEquals(pCopy, p);
-    }
-
-    @Test
-    public void testSimpleKeySetPitchLower() {
-        Piano p = new Piano1();
-        Piano pCopy = new Piano1();
-
-        p.key(1).setPitch(2);
-        pCopy.key(1).setPitch(2);
-        double kPitch = p.key(1).pitch();
-        double kPitchCopy = pCopy.key(1).pitch();
-
-        assertEquals(2, kPitch, 0.00001);
-        assertEquals(kPitchCopy, kPitch);
+        assertEquals(4000.0, p.key(49).pitch(), epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -119,15 +90,15 @@ public class PianoSecondaryTest {
     public void testActiveKeysOneActiveKey() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
-        p.key(1).play(3.0);
-        pCopy.key(1).play(3.0):
+        p.key(1).setTime(3.0);
+        pCopy.key(1).setTime(3.0):
         Piano.Key[] kArray = p.activeKeys();
         Piano.Key[] kArrayCopy = pCopy.activeKeys();
 
         assertEquals(kArrayCopy, kArray);
         assertEquals(1, kArray.length);
         assertEquals(p.key(1), kArray[0]);
-        assertEquals(3.0, kArray[0].time(), 0.0001);
+        assertEquals(3.0, kArray[0].time(), epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -135,14 +106,14 @@ public class PianoSecondaryTest {
     public void testActiveKeysManyActiveKeys() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
-        p.key(1).play(3.0);
-        p.key(43).play(4.0);
-        p.key(87).play(9.0);
-        p.key(23).play(1.0);
-        pCopy.key(1).play(3.0);
-        pCopy.key(43).play(4.0);
-        pCopy.key(87).play(9.0);
-        pCopy.key(23).play(1.0);
+        p.key(1).setTime(3.0);
+        p.key(43).setTime(4.0);
+        p.key(87).setTime(9.0);
+        p.key(23).setTime(1.0);
+        pCopy.key(1).setTime(3.0);
+        pCopy.key(43).setTime(4.0);
+        pCopy.key(87).setTime(9.0);
+        pCopy.key(23).setTime(1.0);
         Piano.Key[] kArray = p.activeKeys();
         Piano.Key[] kArrayCopy = pCopy.activeKeys();
 
@@ -152,10 +123,10 @@ public class PianoSecondaryTest {
         assertEquals(p.key(23), kArray[1]);
         assertEquals(p.key(43), kArray[2]);
         assertEquals(p.key(87), kArray[3]);
-        assertEquals(3.0, kArray[0].time(), 0.0001);
-        assertEquals(1.0, kArray[1].time(), 0.0001);
-        assertEquals(4.0, kArray[2].time(), 0.0001);
-        assertEquals(9.0, kArray[3].time(), 0.0001);
+        assertEquals(3.0, kArray[0].time(), epsilon);
+        assertEquals(1.0, kArray[1].time(), epsilon);
+        assertEquals(4.0, kArray[2].time(), epsilon);
+        assertEquals(9.0, kArray[3].time(), epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -180,8 +151,8 @@ public class PianoSecondaryTest {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
 
-        p.key(1).play(4.0);
-        pCopy.key(1).play(4.0);
+        p.key(1).setTime(4.0);
+        pCopy.key(1).setTime(4.0);
         Piano.Key[] kArray = p.activeKeys();
         Piano.Key[] kArrayCopy = pCopy.activeKeys();
         p.passTime(0);
@@ -204,7 +175,7 @@ public class PianoSecondaryTest {
         pCopy.passTime(5000);
 
         assertEquals(kArrayCopy, kArray);
-        assertEquals(5.0, p.time(), 0.0001);
+        assertEquals(5.0, p.time(), epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -213,16 +184,16 @@ public class PianoSecondaryTest {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
 
-        p.key(1).play(7.0);
-        pCopy.key(1).play(7.0);
+        p.key(1).setTime(7.0);
+        pCopy.key(1).setTime(7.0);
         Piano.Key[] kArray = p.activeKeys();
         Piano.Key[] kArrayCopy = pCopy.activeKeys();
         p.passTime(5000);
         pCopy.passTime(5000);
 
         assertEquals(kArrayCopy, kArray);
-        assertEquals(5.0, p.time(), 0.0001);
-        assertEquals(2.0, kArray[0].time(), 0.0001);
+        assertEquals(5.0, p.time(), epsilon);
+        assertEquals(2.0, kArray[0].time(), epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -231,12 +202,12 @@ public class PianoSecondaryTest {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
 
-        p.key(1).play(7.0);
-        p.key(54).play(9.0);
-        p.key(20).play(6.0);
-        pCopy.key(1).play(7.0);
-        pCopy.key(54).play(9.0);
-        pCopy.key(20).play(6.0);
+        p.key(1).setTime(7.0);
+        p.key(54).setTime(9.0);
+        p.key(20).setTime(6.0);
+        pCopy.key(1).setTime(7.0);
+        pCopy.key(54).setTime(9.0);
+        pCopy.key(20).setTime(6.0);
         Piano.Key[] kArray = p.activeKeys();
         Piano.Key[] kArrayCopy = pCopy.activeKeys();
 
@@ -244,10 +215,10 @@ public class PianoSecondaryTest {
         pCopy.passTime(5000);
 
         assertEquals(kArrayCopy, kArray);
-        assertEquals(5.0, p.time(), 0.0001);
-        assertEquals(2.0, kArray[0].time(), 0.0001);
-        assertEquals(1.0, kArray[1].time(), 0.0001);
-        assertEquals(4.0, kArray[2].time(), 0.0001);
+        assertEquals(5.0, p.time(), epsilon);
+        assertEquals(2.0, kArray[0].time(), epsilon);
+        assertEquals(1.0, kArray[1].time(), epsilon);
+        assertEquals(4.0, kArray[2].time(), epsilon);
         assertEquals(pCopy, p);
     }
 

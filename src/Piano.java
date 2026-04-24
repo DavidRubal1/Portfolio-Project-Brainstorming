@@ -28,7 +28,7 @@ public interface Piano extends PianoKernel {
          * @requires newTime >= 0.0
          * @ensures this.time = newTime
          */
-        void play(double newTime);
+        void setTime(double newTime);
 
         /**
          * Returns the pitch of the Key.
@@ -41,18 +41,43 @@ public interface Piano extends PianoKernel {
          * Changes the pitch of the Key to the provided value.
          *
          * @param newPitch
-         *            the pitch that the Key's current pitch will be updated to
+         *            the pitch that the Key's current pitch will be changed to
          * @requires newPitch > 0
-         * @ensures this.pitch = newPitch
+         * @ensures this Key's pitch = newPitch
          */
         void setPitch(double newPitch);
     }
 
     /**
-     * Returns an ordered array of the active Keys from lowest key position to
-     * highest.
+     * Plays the Key by updating the respective Key's active time.
      *
-     * @return array of all active Keys in this
+     * @param keyPos
+     *            the Key that is being pressed
+     * @param time
+     *            the time value that the Key will be set to
+     * @requires time >= 0, keyPos is in range of this
+     * @ensures the Key at postion keyPos's time = time
+     */
+    void play(int keyPos, double time);
+
+    /**
+     * Changes the pitch of the given key to a specified value.
+     *
+     * @param keyPos
+     *            the number for the Key that is to have its pitch changed
+     * @param pitch
+     *            the pitch that the key will be set to
+     * @replaces the pitch of the Key at keyPos to pitch.
+     * @requires keyPos is in range of this, pitch >= 0
+     * @ensures the Key at postion keyPos's pitch = pitch
+     */
+    void tune(int keyPos, double pitch);
+
+    /**
+     * Returns an ordered array of the active Keys from lowest key position to
+     * highest. Aliases the active Keys in this.
+     *
+     * @return an array of all active Keys in this
      */
     Piano.Key[] activeKeys();
 

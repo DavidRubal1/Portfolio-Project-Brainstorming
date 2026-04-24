@@ -1,12 +1,17 @@
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 public final class Piano1Test {
 
+    final double epsilon = 0.0001;
+
     //TODO: possibly add assert statements for the preconditions
     // add testing cases
     // Do I test the methods of the SimpleKey methods as well? getting a key relies on the Piano getter method
+    /// ^ no
     // Do i use multiple tests using the different constructor parameters?
-    // Do i test the SimpleKey methods separately or just trust that they work
+    // Do i test the SimpleKey methods separately or just trust that they work -> no
     // How do I test methods that first require another method to be called for any difference to be detected?
     @Test
     public void testGetKeyFirstKey() {
@@ -14,7 +19,7 @@ public final class Piano1Test {
         Piano pCopy = new Piano1();
         Piano.Key k = p.key(1);
 
-        assertEquals(27.5, k.pitch(), 0.001);
+        assertEquals(27.5, k.pitch(), epsilon);
         assertEquals(0.0, k.time());
         assertEquals(pCopy, p);
     }
@@ -25,7 +30,7 @@ public final class Piano1Test {
         Piano pCopy = new Piano1();
         Piano.Key k = p.key(88);
 
-        assertEquals(4186.009, k.pitch(), 0.001);
+        assertEquals(4186.009, k.pitch(), epsilon);
         assertEquals(0.0, k.time());
         assertEquals(pCopy, p);
     }
@@ -138,7 +143,7 @@ public final class Piano1Test {
         assertEquals(87, p.length());
         assertEquals(2, p.offset());
         assertEquals(0.0, k.time());
-        assertEquals(27.5, k.pitch(), 0.0001);
+        assertEquals(27.5, k.pitch(), epsilon);
         assertEquals(kCopy, k);
         assertEquals(pCopy, p);
     }
@@ -159,7 +164,7 @@ public final class Piano1Test {
         assertEquals(87, p.length());
         assertEquals(1, p.getOffset());
         assertEquals(0.0, k.time());
-        assertEquals(4186.009, k.pitch(), 0.0001);
+        assertEquals(4186.009, k.pitch(), epsilon);
         assertEquals(kCopy, k);
         assertEquals(pCopy, p);
     }
