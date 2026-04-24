@@ -1,12 +1,10 @@
-// Do i include tests for equals, hashCode, and toString?
-
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 public final class PianoTest {
 
-    final double epsilon = epsilon;
+    final double epsilon = this.epsilon;
 
     @Test
     public void testPlayFirstKey() {
@@ -15,7 +13,7 @@ public final class PianoTest {
         p.play(1, 5.0);
         pCopy.play(1, 5.0);
 
-        assertEquals(5.0, p.key(1).time(), epsilon);
+        assertEquals(5.0, p.key(1).time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -26,7 +24,7 @@ public final class PianoTest {
         p.play(88, 5.0);
         pCopy.play(88, 5.0);
 
-        assertEquals(5.0, p.key(88).time(), epsilon);
+        assertEquals(5.0, p.key(88).time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -37,7 +35,7 @@ public final class PianoTest {
         p.play(88, 36000);
         pCopy.play(88, 36000);
 
-        assertEquals(36000, p.key(88).time(), epsilon);
+        assertEquals(36000, p.key(88).time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -48,7 +46,7 @@ public final class PianoTest {
         p.tune(1, 28.5);
         pCopy.tune(1, 28.5);
 
-        assertEquals(28.5, p.key(1).pitch(), epsilon);
+        assertEquals(28.5, p.key(1).pitch(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -59,7 +57,7 @@ public final class PianoTest {
         p.tune(1, 0.5);
         pCopy.tune(1, 0.5);
 
-        assertEquals(0.5, p.key(1).pitch(), epsilon);
+        assertEquals(0.5, p.key(1).pitch(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -68,9 +66,9 @@ public final class PianoTest {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
         p.tune(49, 4000.0);
-        pCopy.tune(1, 4000.0);
+        pCopy.tune(49, 4000.0);
 
-        assertEquals(4000.0, p.key(49).pitch(), epsilon);
+        assertEquals(4000.0, p.key(49).pitch(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -91,14 +89,14 @@ public final class PianoTest {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
         p.key(1).setTime(3.0);
-        pCopy.key(1).setTime(3.0):
+        pCopy.key(1).setTime(3.0);
         Piano.Key[] kArray = p.activeKeys();
         Piano.Key[] kArrayCopy = pCopy.activeKeys();
 
         assertEquals(kArrayCopy, kArray);
         assertEquals(1, kArray.length);
         assertEquals(p.key(1), kArray[0]);
-        assertEquals(3.0, kArray[0].time(), epsilon);
+        assertEquals(3.0, kArray[0].time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -123,10 +121,10 @@ public final class PianoTest {
         assertEquals(p.key(23), kArray[1]);
         assertEquals(p.key(43), kArray[2]);
         assertEquals(p.key(87), kArray[3]);
-        assertEquals(3.0, kArray[0].time(), epsilon);
-        assertEquals(1.0, kArray[1].time(), epsilon);
-        assertEquals(4.0, kArray[2].time(), epsilon);
-        assertEquals(9.0, kArray[3].time(), epsilon);
+        assertEquals(3.0, kArray[0].time(), this.epsilon);
+        assertEquals(1.0, kArray[1].time(), this.epsilon);
+        assertEquals(4.0, kArray[2].time(), this.epsilon);
+        assertEquals(9.0, kArray[3].time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -142,7 +140,7 @@ public final class PianoTest {
         pCopy.passTime(0);
 
         assertEquals(kArrayCopy, kArray);
-        assertEquals(0.0, p.time());
+        assertEquals(0.0, p.time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -159,8 +157,8 @@ public final class PianoTest {
         pCopy.passTime(0);
 
         assertEquals(kArrayCopy, kArray);
-        assertEquals(0.0, p.time());
-        assertEquals(4.0, kArray[0].time());
+        assertEquals(0.0, p.time(), this.epsilon);
+        assertEquals(4.0, kArray[0].time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -175,7 +173,7 @@ public final class PianoTest {
         pCopy.passTime(5000);
 
         assertEquals(kArrayCopy, kArray);
-        assertEquals(5.0, p.time(), epsilon);
+        assertEquals(5.0, p.time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -192,8 +190,8 @@ public final class PianoTest {
         pCopy.passTime(5000);
 
         assertEquals(kArrayCopy, kArray);
-        assertEquals(5.0, p.time(), epsilon);
-        assertEquals(2.0, kArray[0].time(), epsilon);
+        assertEquals(5.0, p.time(), this.epsilon);
+        assertEquals(2.0, kArray[0].time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
@@ -215,10 +213,10 @@ public final class PianoTest {
         pCopy.passTime(5000);
 
         assertEquals(kArrayCopy, kArray);
-        assertEquals(5.0, p.time(), epsilon);
-        assertEquals(2.0, kArray[0].time(), epsilon);
-        assertEquals(1.0, kArray[1].time(), epsilon);
-        assertEquals(4.0, kArray[2].time(), epsilon);
+        assertEquals(5.0, p.time(), this.epsilon);
+        assertEquals(2.0, kArray[0].time(), this.epsilon);
+        assertEquals(1.0, kArray[1].time(), this.epsilon);
+        assertEquals(4.0, kArray[2].time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 

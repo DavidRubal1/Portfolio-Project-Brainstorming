@@ -52,7 +52,7 @@ public interface Piano extends PianoKernel {
      * Plays the Key by updating the respective Key's active time.
      *
      * @param keyPos
-     *            the Key that is being pressed
+     *            the position of the Key that is being pressed
      * @param time
      *            the time value that the Key will be set to
      * @requires time >= 0, keyPos is in range of this

@@ -1,4 +1,3 @@
-import java.security.Key;
 import java.util.ArrayList;
 
 /**
@@ -214,7 +213,7 @@ public abstract class PianoSecondary implements Piano {
         assert milliseconds >= 0;
 
         final double millisecondsToSecondsRate = 1000.0;
-        this.setTime(this.time() - milliseconds / millisecondsToSecondsRate);
+        this.setTime(this.time() + milliseconds / millisecondsToSecondsRate);
         for (int i = 0; i < this.length(); i++) {
             Piano.Key key = this.key(i + this.offset());
             if (key.time() > 0) {
