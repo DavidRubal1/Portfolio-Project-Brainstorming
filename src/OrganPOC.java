@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+import components.piano.Piano;
+import components.piano.Piano1;
+
 /**
  * Organ Proof of Concept. This is a use case of the Piano Component for a two
  * manual organ with a pedal board and stops.

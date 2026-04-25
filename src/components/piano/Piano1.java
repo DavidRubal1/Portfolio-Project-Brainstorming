@@ -1,3 +1,5 @@
+package components.piano;
+
 import components.map.Map;
 import components.map.Map1L;
 

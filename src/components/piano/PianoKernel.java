@@ -1,3 +1,5 @@
+package components.piano;
+
 import components.standard.Standard;
 
 /**

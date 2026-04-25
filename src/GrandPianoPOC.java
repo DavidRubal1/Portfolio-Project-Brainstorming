@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+import components.piano.Piano;
+import components.piano.Piano1;
+
 /**
  * Use of Piano1 that includes the three pedals found on grand pianos.
  *

@@ -1,3 +1,5 @@
+package components.piano;
+
 /**
  * PianoKernel with secondary methods.
  *
