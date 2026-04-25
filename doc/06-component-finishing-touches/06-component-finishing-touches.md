@@ -305,18 +305,18 @@ Take some time to fill them out honestly.
 > complete the portfolio project, how much better (or worse) do you think you
 > understand software development and why?
 
-<!-- TODO: discuss -->
+I think that I have a gained a glimpse of the substantial forethought and planning is required for large software development projects. There were many times when I went back on a previous decision because I was unsure of how I wanted to represent something. I feel like my understanding of planning behind the "doing" has improved. I also understood more about how important good documentation is. Documenting and commenting on paper is, to me, the most boring part of the process. However, I learned that, similar to my previous point, being able to convey and understand how something works is much more important than it would ever seem in a classroom setting.
 
 > Also, did the portfolio project surface any gaps in your own knowledge of
 > software development. If so, what are those gaps and how did you address them?
 
-<!-- TODO: discuss -->
+One particular problem that stood out to me was with how I represented the Key Objects of the Piano. I figured that the interface should be nested within another interface, but I was unsure of which interface to place it in and how that would carry forward into the rest of my implementation. To come to a decision I decided to look at the interface for the OSU Map Component and how it handles Map.Pair, which I partially what I based the Key off of in the first place.
 
 > Finally, as a part of completing the portfolio project, to what extent has
 > your perspective of software development changed, if at all? In other words,
 > is software development something you still enjoy? If not, why not?
 
-<!-- TODO: discuss -->
+Yes, I would still say that I find joy in software development, but my perspective on how I should go about software development has shifted more towards the planning side than the writing code side.
 
 > One of the challenges of completing the portfolio project is picking up a lot
 > of skills on your own. Some of these skills are, of course, software skills.
@@ -324,29 +324,30 @@ Take some time to fill them out honestly.
 > this process. Therefore, the first question is what skills did you pick up
 > through this process?
 
-<!-- TODO: discuss -->
+Throughout the development of my portfolio project, I have picked up the skills for ideation and planning out a design, for clearly communicating a design and its functionality, for time management and organization, and for evaluating and incorporating feedback.
 
 > The follow-up question is: could you rephrase these skills you picked up
 > as bullet points that you could put on a resume? Try it below.
 
-<!-- TODO: discuss -->
+- Design Ideation and Planning
+- Concept Communication
+- Time Management
+- Feedback Evaluation
 
 > Next, how has working on this project affected your career trajectory?
 > In other words, do you now hate the topic you picked? Or, are you even more
 > interested in it? Both outcomes are valuable to your personal development.
 
-<!-- TODO: discuss -->
+I think that creating this component has motivated me to keep building off of it to make a practical application out of it. In other words, I want to keep going and I think that it would be a fun challenge to continue developing.
 
 > Finally, consider the skills you've picked up and your current career
 > trajectory. What are some things you could do to continue on your
 > career trajectory? Also, who are some mentors you could contact to help
 > you stay on your path?
 
-<!-- TODO: discuss -->
+I think that using this project as a staring point for an app would be something for me to consider. I could get in touch with someone experienced in app development to learn the ins and outs of that field to get a better understanding of how to start with that.
 
 ### Changelog
-
-<!-- TODO: update CHANGELOG then delete this comment -->
 
 At the end of every assignment, you should update the
 [CHANGELOG.md](../../CHANGELOG.md) file found in the root of the project folder.
@@ -381,8 +382,6 @@ like to accomplish that, you will need to make GitHub releases after each pull
 request merge (or at least tag your commits). This is not required.
 
 ### Submission
-
-<!-- TODO: read the submission instructions then delete this comment -->
 
 Assuming that your project is in a GitHub repo somewhere and your changes are on
 a proof-of-concept branch, then what we'll want you to do is create a pull
