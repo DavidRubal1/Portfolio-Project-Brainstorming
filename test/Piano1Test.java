@@ -4,6 +4,8 @@ import org.junit.Test;
 
 /**
  * Test Suite for Kernel Method implementation in Piano1.
+ *
+ * @author David Rubal
  */
 public final class Piano1Test {
 
@@ -12,33 +14,58 @@ public final class Piano1Test {
      */
     private final double epsilon = 0.0001;
 
-    //TODO: possibly add assert statements for the preconditions
-    // add testing cases
-    // Do i use multiple tests using the different constructor parameters?
-    // Do i test the SimpleKey methods separately or just trust that they work -> n
-    // How do I test methods that first require another method to be called for any difference to be detected?
-    @Test
+    /**
+     * Test retriving the first Key of the Piano.
+     */
     public void testGetKeyFirstKey() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
         Piano.Key k = p.key(1);
 
-        assertEquals(27.5, k.pitch(), this.epsilon);
+        final double pitchExpected = 27.5;
+
+        assertEquals(pitchExpected, k.pitch(), this.epsilon);
         assertEquals(0.0, k.time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test retriving the last Key of the Piano.
+     */
     @Test
     public void testGetKeyLastKey() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
-        Piano.Key k = p.key(88);
+        final int lastKeyPos = 88;
+        Piano.Key k = p.key(lastKeyPos);
 
-        assertEquals(4186.009, k.pitch(), this.epsilon);
+        final double pitchExpected = 4186.009;
+
+        assertEquals(pitchExpected, k.pitch(), this.epsilon);
         assertEquals(0.0, k.time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test retriving the first Key of the Piano that starts at a position other
+     * than 1.
+     */
+    public void testGetKeyFirstKeyCustom() {
+        final int customLength = 40, customStartPos = 3;
+        Piano p = new Piano1(customLength, customStartPos);
+        Piano pCopy = new Piano1(customLength, customStartPos);
+        Piano.Key k = p.key(1);
+
+        final double pitchExpected = 30.86771;
+
+        assertEquals(pitchExpected, k.pitch(), this.epsilon);
+        assertEquals(0.0, k.time(), this.epsilon);
+        assertEquals(pCopy, p);
+    }
+
+    /**
+     * Test getting the initial time.
+     */
     @Test
     public void testGetTime() {
         Piano p = new Piano1();
@@ -48,35 +75,66 @@ public final class Piano1Test {
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test setting the time to a small value.
+     */
     @Test
-    public void testSetTime() {
+    public void testSetTimeSmall() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
-        p.setTime(3.0);
-        pCopy.setTime(3.0);
+        final double smallTimeValue = 3.4;
+        p.setTime(smallTimeValue);
+        pCopy.setTime(smallTimeValue);
 
-        assertEquals(3.0, p.time(), this.epsilon);
+        assertEquals(smallTimeValue, p.time(), this.epsilon);
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test setting the time to a large value.
+     */
+    @Test
+    public void testSetTimeLarge() {
+        Piano p = new Piano1();
+        Piano pCopy = new Piano1();
+        final double largeTimeValue = 9093021.9;
+        p.setTime(largeTimeValue);
+        pCopy.setTime(largeTimeValue);
+
+        assertEquals(largeTimeValue, p.time(), this.epsilon);
+        assertEquals(pCopy, p);
+    }
+
+    /**
+     * Test getting the length of a Piano of default size.
+     */
     @Test
     public void testLengthDefault() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
 
-        assertEquals(88, p.length());
+        final int lastKeyPos = 88;
+
+        assertEquals(lastKeyPos, p.length());
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test getting the length of a Piano of custom size.
+     */
     @Test
     public void testLengthCustom() {
-        Piano p = new Piano1(40, 1);
-        Piano pCopy = new Piano1(40, 1);
+        final int customLength = 40, startPos = 1;
+        Piano p = new Piano1(customLength, startPos);
+        Piano pCopy = new Piano1(customLength, startPos);
 
-        assertEquals(40, p.length());
+        assertEquals(customLength, p.length());
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test getting the offset of a Piano of default size.
+     */
     @Test
     public void testGetOffsetDefault() {
         Piano p = new Piano1();
@@ -86,15 +144,22 @@ public final class Piano1Test {
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test getting the offset of a Piano of custom size.
+     */
     @Test
     public void testGetOffsetCustom() {
-        Piano p = new Piano1(88, 5);
-        Piano pCopy = new Piano1(88, 5);
+        final int length = 88, customStartPos = 5;
+        Piano p = new Piano1(length, customStartPos);
+        Piano pCopy = new Piano1(length, customStartPos);
 
-        assertEquals(5, p.offset());
+        assertEquals(customStartPos, p.offset());
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test adding a key to the start (lowest position) of a Piano.
+     */
     @Test
     public void testAddKeyAtStart() {
         Piano p = new Piano1();
@@ -103,34 +168,33 @@ public final class Piano1Test {
         p.addKey(0);
         pCopy.addKey(0);
 
-        // TODO: how do I check these without calling other kernel methods?
-        // the length should be increased by 1
-        // the offset should be decreased by 1
-        // the new key should have proper time and pitch
+        final int expectedLength = 89;
 
-        assertEquals(89, p.length());
+        assertEquals(expectedLength, p.length());
         assertEquals(0, p.offset());
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test adding a key to the start (highest position) of a Piano.
+     */
     @Test
     public void testAddKeyAtEnd() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
 
-        p.addKey(89);
-        pCopy.addKey(89);
+        final int nextKeyPosAndExpectedLength = 89;
+        p.addKey(nextKeyPosAndExpectedLength);
+        pCopy.addKey(nextKeyPosAndExpectedLength);
 
-        // TODO: how do I check these without calling other kernel methods?
-        // the length should be increased by 1
-        // the offset should be decreased by 1
-        // the new key should have proper time and pitch
-
-        assertEquals(89, p.length());
+        assertEquals(nextKeyPosAndExpectedLength, p.length());
         assertEquals(1, p.offset());
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test removing a key from the start (lowest position) of a Piano.
+     */
     @Test
     public void testRemoveKeyAtStart() {
         Piano p = new Piano1();
@@ -139,36 +203,35 @@ public final class Piano1Test {
         Piano.Key k = p.removeKey(1);
         Piano.Key kCopy = pCopy.removeKey(1);
 
-        // TODO: how do I check these without calling other kernel methods?
-        // the length should be increased by 1
-        // the offset should be decreased by 1
-        // the new key should have proper time and pitch
+        final int expectedLength = 87, expectedOffset = 2;
+        final double pitchExpected = 27.5;
 
-        assertEquals(87, p.length());
-        assertEquals(2, p.offset());
+        assertEquals(expectedLength, p.length());
+        assertEquals(expectedOffset, p.offset());
         assertEquals(0.0, k.time(), this.epsilon);
-        assertEquals(27.5, k.pitch(), this.epsilon);
+        assertEquals(pitchExpected, k.pitch(), this.epsilon);
         assertEquals(kCopy, k);
         assertEquals(pCopy, p);
     }
 
+    /**
+     * Test removing a key from the end (highest position) of a Piano.
+     */
     @Test
     public void testRemoveKeyAtEnd() {
         Piano p = new Piano1();
         Piano pCopy = new Piano1();
 
-        Piano.Key k = p.removeKey(88);
-        Piano.Key kCopy = pCopy.removeKey(88);
+        final int lastKeyPos = 88, expectedLength = 87;
+        final double pitchExpected = 4186.009;
 
-        // TODO: how do I check these without calling other kernel methods?
-        // the length should be increased by 1
-        // the offset should be decreased by 1
-        // the new key should have proper time and pitch
+        Piano.Key k = p.removeKey(lastKeyPos);
+        Piano.Key kCopy = pCopy.removeKey(lastKeyPos);
 
-        assertEquals(87, p.length());
+        assertEquals(expectedLength, p.length());
         assertEquals(1, p.offset());
         assertEquals(0.0, k.time(), this.epsilon);
-        assertEquals(4186.009, k.pitch(), this.epsilon);
+        assertEquals(pitchExpected, k.pitch(), this.epsilon);
         assertEquals(kCopy, k);
         assertEquals(pCopy, p);
     }
